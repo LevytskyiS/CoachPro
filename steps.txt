@@ -1,0 +1,54 @@
+1. python -m venv venv
+2. pip install django
+3. pip install django-environ
+4. django-admin startproject mysite
+5. python manage.py startapp polls
+6. settings: 
+    6.1. import os, environ
+    6.2. env = environ.Env()
+    6.3. environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+    6.4. important variables must be replaced with env('secret')
+    6.5. Installed_apps - add new app
+    6.6. STATIC_URL = "static/"
+         STATIC_ROOT = os.path.join(BASE_DIR, "static")
+         STATICFILES_DIRS = []
+    6.7. MEDIA_URL = "/media/"
+         MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+7. create view - app
+8. create urls - app
+9. register app/urls.py at main_app/urls.py
+10. python manage.py migrate - для самой первой миграции
+11. create models for app
+12. register models at app/admin.py
+13. python manage.py makemigrations app
+14. python manage.py migrate main
+15. app/templates/app -> base.html
+16. python manage.py createsuperuser
+17. add postgres settings
+18. pip install psycopg2-binary
+19. docker-compose file
+20. python manage.py migrate
+FLY
+21. APP_NAME=
+22. setting.py -> ALLOWED_HOSTS
+23. pip install gunicorn
+24. pip freeze > requirements.txt
+25. fly launch
+26. dockerfile + deploy -> ? stucked
+
+DOCKER + DEPLOY TO DIGITAL OCEAN 
+27. Dockerfile 
+FROM python:3.10-slim-buster
+WORKDIR /app
+COPY requirements.txt /app
+RUN pip install -r requirements.txt
+COPY . /app
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000", "--noreload"]
+
+28. docker build . --platform=linux/amd64 -t pycoder7/quotes:0.0.1
+29. docker push pycoder7/quotes:0.0.1
+30. docker pull pycoder7/quotes:0.0.1
+31. docker run --name quotes_app -p 8000:8000 -d pycoder7/quotes:0.0.1
+
+
+docker run --name my-postgres --env POSTGRES_PASSWORD=admin --volume postgres-volume:/var/lib/postgresql/data --publish 5432:5432 --detach postgres
