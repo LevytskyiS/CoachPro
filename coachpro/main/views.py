@@ -27,6 +27,6 @@ class ClientListView(ListView):
         return (
             # Фильтруемся по Profile
             Profile.objects.filter(is_client=True)
-            # Фильтруемся по полю Profile.user (которое имеет ключ и связано с User) и его свойству is_active
+            # Фильтруемся по полю Profile.user (которое имеет ключ и связано с User) и его свойству User.is_active
             .filter(user__is_active=True)
         )
