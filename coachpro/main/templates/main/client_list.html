@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if request.user.is_authenticated and request.user.is_superuser %}
+    <div>
+        <a href="{% url 'main:index' %}">HOME PAGE</a>
+    </div>
+    <div>
+        <p>SUPERUSER</p>
+    </div>
+
+    {% if profiles %}
+        <p>PROFILES</p>
+        <ul>    
+            {% for profile in profiles %}
+            <li><p>{{ profile }}</p></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div>
+            <p>You don't have any clients yet</p>
+        </div>
+    {% endif %}
+
+{% endif %}
+{% endblock %}

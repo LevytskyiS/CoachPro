@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div>
+        <p>HOME PAGE</p>
+    </div>
+    <div>
+        <ul>
+            {% if request.user.is_authenticated %}
+            <li>
+                <a href="{% url 'main:index' %}">HOME</a>
+            </li>
+            <li>
+                <a href="#">MY TRAINIGS</a>
+            </li>
+            <li>
+                <a href="#">MY PROGRESS</a>
+            </li>
+            {% if request.user.is_superuser and request.user.is_authenticated %}
+            <li>
+                <a href="{% url 'main:client_list' %}">MY CLIENTS</a>
+            </li>
+            {% endif %}
+            {% else %}
+            <div>
+                <p>LOGIN REQUIRED</p>
+            </div>
+            {% endif %}
+        </ul>
+    </div>
+
+{% endblock %}
