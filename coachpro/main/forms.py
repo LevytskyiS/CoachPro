@@ -6,11 +6,12 @@ from django.forms import (
     TextInput,
     PasswordInput,
     FileInput,
+    ImageField,
 )
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-from .models import Profile, Weight, File
+from .models import Profile, Weight, File, Photo
 
 
 class RegisterUserForm(UserCreationForm):
@@ -52,3 +53,12 @@ class UploadFileForm(ModelForm):
                 attrs={"class": "form-control", "placeholder": "Upload File"}
             ),
         }
+
+
+class UploadPhotoForm(ModelForm):
+    class Meta:
+        model = Photo
+        exclude = ["profile"]
+        # widgets = {"image": ImageField()}
+        # fields = "__all__"
+        image = ImageField()

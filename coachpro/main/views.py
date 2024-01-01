@@ -14,7 +14,13 @@ from django.contrib.auth.views import (
 from django.http import HttpRequest, HttpResponseRedirect
 
 from .models import Profile, Weight, File, Photo
-from .forms import RegisterUserForm, LoginUserForm, CreateWeightForm, UploadFileForm
+from .forms import (
+    RegisterUserForm,
+    LoginUserForm,
+    CreateWeightForm,
+    UploadFileForm,
+    UploadPhotoForm,
+)
 
 
 # Create your views here.
@@ -50,6 +56,7 @@ class ClientDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["form"] = CreateWeightForm()
         context["upload_file_form"] = UploadFileForm()
+        context["upload_photo_form"] = UploadPhotoForm()
         return context
 
     # def post(self, request, *args, **kwars):
@@ -74,25 +81,40 @@ class CreateWeight(CreateView):
         return self.object.profile.get_absolute_url()
 
 
-def upload_file(request):
-    if request.method == "POST":
-        form = UploadFileForm(
-            request.POST,
-            request.FILES,
-        )
-        profile = Profile.objects.get(user=request.user.id)
-        form.instance.profile = profile
-        if form.is_valid():
-            file = form.save()
-            file.save()
-            return HttpResponseRedirect(profile.get_absolute_url())
-    else:
-        form = UploadFileForm()
-    return render(request, "main/client_detail.html", {"form": form})
+# def upload_file(request):
+#     if request.method == "POST":
+#         form = UploadFileForm(
+#             request.POST,
+#             request.FILES,
+#         )
+#         profile = Profile.objects.get(user=request.user.id)
+#         form.instance.profile = profile
+#         if form.is_valid():
+#             file = form.save()
+#             file.save()
+#             return HttpResponseRedirect(profile.get_absolute_url())
+#     else:
+#         form = UploadFileForm()
+#     return render(request, "main/client_detail.html", {"form": form})
 
 
 class UploadFile(FormView):
     form_class = UploadFileForm
+    template_name = "main/client_detail.html"
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(data=request.POST, files=request.FILES)
+        profile = Profile.objects.get(user=request.user.id)
+        form.instance.profile = profile
+
+        if form.is_valid():
+            file = form.save()
+            file.save()
+            return HttpResponseRedirect(profile.get_absolute_url())
+
+
+class UploadPhoto(FormView):
+    form_class = UploadPhotoForm
     template_name = "main/client_detail.html"
 
     def post(self, request, *args, **kwargs):
