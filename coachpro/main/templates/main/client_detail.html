@@ -14,13 +14,24 @@
         <p>No photos yet</p>
     {% endif %}
 
+    {% if profile.get_all_weights %}
+        <p>My progress</p>
+        {% for weight in profile.get_all_weights %}
+            <p>{{ weight.value }}</p>
+            <p>{{ weight.date }}</p>
+        {% endfor %}
+    {% else %}
+        <p>No progress added yet</p>
+    {% endif %}
+
+
     {% if profile.get_files %}
         <p>My files</p>
         {% for file in profile.get_files %}
             <a href="{{ file.file.url }}">File</a>
         {% endfor %}
     {% else %}
-        <p>No photos yet</p>
+        <p>No files yet</p>
     {% endif %}
 </div>
 {% endblock %}

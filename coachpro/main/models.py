@@ -20,6 +20,17 @@ class Profile(models.Model):
     def get_files(self):
         return self.files.all()
 
+    def get_all_weights(self):
+        return self.weights.all()
+
+
+class Weight(models.Model):
+    profile = models.ForeignKey(
+        Profile, related_name="weights", on_delete=models.CASCADE
+    )
+    date = models.DateField(auto_now_add=True)
+    value = models.DecimalField(max_digits=5, decimal_places=2)
+
 
 class Photo(models.Model):
     profile = models.ForeignKey(
