@@ -25,11 +25,13 @@
         <p>No progress added yet</p>
     {% endif %}
 
-    <form action="{% url 'main:create_weight' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Submit">
-    </form>
+    {% if not request.user.is_superuser %}
+        <form action="{% url 'main:create_weight' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
 
     {% if profile.get_files %}
         <p>My files</p>
@@ -38,6 +40,14 @@
         {% endfor %}
     {% else %}
         <p>No files yet</p>
+    {% endif %}
+
+    {% if not request.user.is_superuser %}
+        <form action="{% url 'main:upload_file' %}" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            {{ upload_file_form }}
+            <input type="submit" value="Submit">
+        </form>
     {% endif %}
 </div>
 {% endblock %}

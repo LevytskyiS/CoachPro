@@ -14,6 +14,8 @@ urlpatterns = [
     ),
     # path("weight/<int:pk>/", views.CreateWeight.as_view(), name="create_weight"),
     path("weight/", views.CreateWeight.as_view(), name="create_weight"),
+    # path("upload_file/", views.upload_file, name="upload_file"),
+    path("upload_file/", views.UploadFile.as_view(), name="upload_file"),
     path("registration/", views.RegisterUser.as_view(), name="registration"),
     path("login/", views.LoginUser.as_view(), name="login"),
     path("logout/", views.LogOutUser.as_view(), name="logout"),

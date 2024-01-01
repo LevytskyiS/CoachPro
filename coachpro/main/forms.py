@@ -5,11 +5,12 @@ from django.forms import (
     EmailInput,
     TextInput,
     PasswordInput,
+    FileInput,
 )
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-from .models import Profile, Weight
+from .models import Profile, Weight, File
 
 
 class RegisterUserForm(UserCreationForm):
@@ -38,5 +39,16 @@ class CreateWeightForm(ModelForm):
         widgets = {
             "message": TextInput(
                 attrs={"class": "form-control", "placeholder": "Your current weight"}
+            ),
+        }
+
+
+class UploadFileForm(ModelForm):
+    class Meta:
+        model = File
+        exclude = ["profile"]
+        widgets = {
+            "file": FileInput(
+                attrs={"class": "form-control", "placeholder": "Upload File"}
             ),
         }

@@ -2,7 +2,7 @@ from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, CreateView, DetailView, FormView
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import (
@@ -11,10 +11,10 @@ from django.contrib.auth.views import (
     LogoutView,
     PasswordResetConfirmView,
 )
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponseRedirect
 
-from .models import Profile, Weight
-from .forms import RegisterUserForm, LoginUserForm, CreateWeightForm
+from .models import Profile, Weight, File, Photo
+from .forms import RegisterUserForm, LoginUserForm, CreateWeightForm, UploadFileForm
 
 
 # Create your views here.
@@ -49,6 +49,7 @@ class ClientDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = CreateWeightForm()
+        context["upload_file_form"] = UploadFileForm()
         return context
 
     # def post(self, request, *args, **kwars):
@@ -71,6 +72,38 @@ class CreateWeight(CreateView):
 
     def get_success_url(self) -> str:
         return self.object.profile.get_absolute_url()
+
+
+def upload_file(request):
+    if request.method == "POST":
+        form = UploadFileForm(
+            request.POST,
+            request.FILES,
+        )
+        profile = Profile.objects.get(user=request.user.id)
+        form.instance.profile = profile
+        if form.is_valid():
+            file = form.save()
+            file.save()
+            return HttpResponseRedirect(profile.get_absolute_url())
+    else:
+        form = UploadFileForm()
+    return render(request, "main/client_detail.html", {"form": form})
+
+
+class UploadFile(FormView):
+    form_class = UploadFileForm
+    template_name = "main/client_detail.html"
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(data=request.POST, files=request.FILES)
+        profile = Profile.objects.get(user=request.user.id)
+        form.instance.profile = profile
+
+        if form.is_valid():
+            file = form.save()
+            file.save()
+            return HttpResponseRedirect(profile.get_absolute_url())
 
 
 class RegisterUser(CreateView):
