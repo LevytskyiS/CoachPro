@@ -30,3 +30,8 @@ class ClientListView(ListView):
             # Фильтруемся по полю Profile.user (которое имеет ключ и связано с User) и его свойству User.is_active
             .filter(user__is_active=True)
         )
+
+
+class ClientDetailView(DetailView):
+    model = Profile
+    template_name = "main/client_detail.html"

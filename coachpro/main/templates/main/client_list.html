@@ -15,7 +15,7 @@
         <p>PROFILES</p>
         <ul>    
             {% for profile in profiles %}
-            <li><p>{{ profile }}</p></li>
+            <li><a href="{{ profile.get_absolute_url }}">{{ profile.user.username }}</a></li>
             {% endfor %}
         </ul>
     {% else %}
