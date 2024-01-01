@@ -5,9 +5,15 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login
+from django.contrib.auth.views import (
+    LoginView,
+    PasswordResetView,
+    LogoutView,
+    PasswordResetConfirmView,
+)
 
 from .models import Profile
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm, LoginUserForm
 
 
 # Create your views here.
@@ -49,5 +55,15 @@ class RegisterUser(CreateView):
         user = form.save()
         profile = Profile(user=user, is_client=True)
         profile.save()
-        login(self.request, user)
+        # login(self.request, user)
         return redirect("/")
+
+
+class LoginUser(LoginView):
+    form_class = LoginUserForm
+    template_name = "main/login.html"
+
+
+class LogOutUser(LogoutView):
+    # Logging out via GET requests to the built-in logout view is deprecated. Use POST requests instead.
+    next_page = "/"
