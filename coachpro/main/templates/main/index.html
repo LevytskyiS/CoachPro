@@ -16,7 +16,7 @@
                 <a href="#">MY TRAINIGS</a>
             </li>
             <li>
-                <a href="#">MY PROGRESS</a>
+                <a href="{{ request.user.profile.get_absolute_url }}">MY PROGRESS</a>
             </li>
             {% if request.user.is_superuser and request.user.is_authenticated %}
             <li>

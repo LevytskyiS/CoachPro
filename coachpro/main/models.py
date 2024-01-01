@@ -31,6 +31,9 @@ class Weight(models.Model):
     date = models.DateField(auto_now_add=True)
     value = models.DecimalField(max_digits=5, decimal_places=2)
 
+    # def get_absolute_url(self):
+    #     return reverse("main:create_weight", kwargs={"pk": self.pk})
+
 
 class Photo(models.Model):
     profile = models.ForeignKey(

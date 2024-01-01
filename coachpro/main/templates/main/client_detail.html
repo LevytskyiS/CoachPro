@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<a href="{% url 'main:index' %}">HOME</a>
 <div>
     <h3>{{ profile.user.username }}</h3>
     {% if profile.get_photos %}
@@ -24,6 +25,11 @@
         <p>No progress added yet</p>
     {% endif %}
 
+    <form action="{% url 'main:create_weight' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
 
     {% if profile.get_files %}
         <p>My files</p>

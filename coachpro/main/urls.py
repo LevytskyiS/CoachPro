@@ -12,6 +12,8 @@ urlpatterns = [
         views.ClientDetailView.as_view(),
         name="client_detail",
     ),
+    # path("weight/<int:pk>/", views.CreateWeight.as_view(), name="create_weight"),
+    path("weight/", views.CreateWeight.as_view(), name="create_weight"),
     path("registration/", views.RegisterUser.as_view(), name="registration"),
     path("login/", views.LoginUser.as_view(), name="login"),
     path("logout/", views.LogOutUser.as_view(), name="logout"),

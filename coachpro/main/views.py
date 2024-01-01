@@ -11,9 +11,10 @@ from django.contrib.auth.views import (
     LogoutView,
     PasswordResetConfirmView,
 )
+from django.http import HttpRequest
 
-from .models import Profile
-from .forms import RegisterUserForm, LoginUserForm
+from .models import Profile, Weight
+from .forms import RegisterUserForm, LoginUserForm, CreateWeightForm
 
 
 # Create your views here.
@@ -44,6 +45,32 @@ class ClientListView(ListView):
 class ClientDetailView(DetailView):
     model = Profile
     template_name = "main/client_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = CreateWeightForm()
+        return context
+
+    # def post(self, request, *args, **kwars):
+    #     form = CreateWeight(request.POST)
+    #     print(form)
+
+
+class CreateWeight(CreateView):
+    model = Weight
+    form_class = CreateWeightForm
+    request = HttpRequest()
+
+    def form_valid(self, form):
+        # form.instance.post_id = self.kwargs.get("pk")
+        profile = Profile.objects.get(user=self.request.user.id)
+        form.instance.profile = profile
+        print(form.instance)
+        self.object = form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        return self.object.profile.get_absolute_url()
 
 
 class RegisterUser(CreateView):

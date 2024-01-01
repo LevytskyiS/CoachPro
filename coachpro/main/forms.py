@@ -9,7 +9,7 @@ from django.forms import (
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-from .models import Profile
+from .models import Profile, Weight
 
 
 class RegisterUserForm(UserCreationForm):
@@ -29,3 +29,14 @@ class RegisterUserForm(UserCreationForm):
 class LoginUserForm(AuthenticationForm):
     username = CharField(label="Login", widget=TextInput())
     password = CharField(label="Password", widget=PasswordInput())
+
+
+class CreateWeightForm(ModelForm):
+    class Meta:
+        model = Weight
+        fields = ["value"]
+        widgets = {
+            "message": TextInput(
+                attrs={"class": "form-control", "placeholder": "Your current weight"}
+            ),
+        }
