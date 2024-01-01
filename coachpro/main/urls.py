@@ -12,4 +12,5 @@ urlpatterns = [
         views.ClientDetailView.as_view(),
         name="client_detail",
     ),
+    path("registration/", views.RegisterUser.as_view(), name="registration"),
 ]
