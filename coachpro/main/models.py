@@ -12,7 +12,7 @@ class Profile(models.Model):
     is_client = models.BooleanField(default=False)
     is_coach = models.BooleanField(default=False)
     age = models.IntegerField(null=True)
-    Weight = models.IntegerField(null=True)
+    weight = models.IntegerField(null=True)
     height = models.IntegerField(null=True)
     lifestyle = models.CharField(null=True, max_length=1, choices=LIFESTYLE_CHOICES)
     blood_pressure = models.IntegerField(null=True)

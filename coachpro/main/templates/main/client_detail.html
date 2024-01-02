@@ -4,7 +4,25 @@
 {% block content %}
 <a href="{% url 'main:index' %}">HOME</a>
 <div>
+    {% if not request.user.is_superuser %}
+        <a href="{% url 'main:client_update' pk=profile.id %}">UPDATE</a>
+    {% endif %}
     <h3>{{ profile.user.username }}</h3>
+    <p>{{ profile.age }}</p>
+    <p>{{ profile.weight }}</p>
+    <p>{{ profile.height }}</p>
+    <p>{{ profile.lifestyle }}</p>
+    <p>{{ profile.blood_pressure }}</p>
+    <p>{{ profile.chronic_illness }}</p>
+    <p>{{ profile.spine }}</p>
+    <p>{{ profile.schedule }}</p>
+    <p>{{ profile.steps }}</p>
+    <p>{{ profile.muscles }}</p>
+    <p>{{ profile.unfavourite_food }}</p>
+    <p>{{ profile.food_allergies }}</p>
+    <p>{{ profile.favourite_food }}</p>
+    <p>{{ profile.test_results }}</p>
+
     {% if profile.get_photos %}
         <p>My photos</p>
         {% for photo in profile.get_photos %}

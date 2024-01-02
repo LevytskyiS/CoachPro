@@ -1,8 +1,9 @@
 from typing import Any
+from django.contrib import messages
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, FormView
+from django.views.generic import ListView, CreateView, DetailView, FormView, UpdateView
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import (
@@ -11,7 +12,7 @@ from django.contrib.auth.views import (
     LogoutView,
     PasswordResetConfirmView,
 )
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 
 from .models import Profile, Weight, File, Photo
 from .forms import (
@@ -62,6 +63,26 @@ class ClientDetailView(DetailView):
     # def post(self, request, *args, **kwars):
     #     form = CreateWeight(request.POST)
     #     print(form)
+
+
+class ClientUpdateView(UpdateView):
+    model = Profile
+    fields = [
+        "age",
+        # "weight",
+        # "height",
+        # "lifestyle",
+        # "blood_pressure",
+        # "chronic_illness",
+        # "spine",
+        # "schedule",
+        # "muscles",
+        # "unfavourite_food",
+        # "food_allergies",
+        # "favourite_food",
+        # "test_results",
+    ]
+    template_name_suffix = "_update_form"
 
 
 class CreateWeight(CreateView):

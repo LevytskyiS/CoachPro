@@ -12,6 +12,11 @@ urlpatterns = [
         views.ClientDetailView.as_view(),
         name="client_detail",
     ),
+    path(
+        "clients/update/<int:pk>/",
+        views.ClientUpdateView.as_view(),
+        name="client_update",
+    ),
     # path("weight/<int:pk>/", views.CreateWeight.as_view(), name="create_weight"),
     path("weight/", views.CreateWeight.as_view(), name="create_weight"),
     # path("upload_file/", views.upload_file, name="upload_file"),
