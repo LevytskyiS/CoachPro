@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block content %}
-<a href="{% url 'main:index' %}">HOME</a>
     {% if not notepage.get_all_notes %}
     <div>No notes</div>
     {% else %}
+    <h3>My Notes:</h3>
         {% for note in notepage.get_all_notes %}
+        <p><b>{{ note.user.username }}</b></p>
         <p>{{ note.text }}</p>
-        <p>{{ note.user.username }}</p>
         {% endfor %}
     {% endif %}
 

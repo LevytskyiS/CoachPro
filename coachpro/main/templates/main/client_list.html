@@ -4,12 +4,6 @@
 {% block content %}
 
 {% if request.user.is_authenticated and request.user.is_superuser %}
-    <div>
-        <a href="{% url 'main:index' %}">HOME PAGE</a>
-    </div>
-    <div>
-        <p>SUPERUSER</p>
-    </div>
 
     {% if profiles %}
         <p>Clients</p>

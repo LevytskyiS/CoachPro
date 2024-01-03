@@ -2,45 +2,28 @@
 {% load static %}
 
 {% block content %}
-<a href="{% url 'main:index' %}">HOME</a>
 <div>
-    {% if not request.user.is_superuser %}
-        <a href="{% url 'main:client_update' pk=profile.id %}">UPDATE</a>
-    {% endif %}
-    <h3>{{ profile.user.username }}</h3>
+    {% if profile.user.first_name and profile.user.last_name %}
     <h3>{{ profile.user.first_name }} {{ profile.user.last_name }}</h3>
-    <a href="{{ profile.notepage.get_absolute_url }}">NOTES</a>
-    <p>{{ profile.age }}</p>
-    <p>{{ profile.weight }}</p>
-    <p>{{ profile.height }}</p>
-    <p>{{ profile.lifestyle }}</p>
-    <p>{{ profile.blood_pressure }}</p>
-    <p>{{ profile.chronic_illness }}</p>
-    <p>{{ profile.spine }}</p>
-    <p>{{ profile.schedule }}</p>
-    <p>{{ profile.steps }}</p>
-    <p>{{ profile.muscles }}</p>
-    <p>{{ profile.unfavourite_food }}</p>
-    <p>{{ profile.food_allergies }}</p>
-    <p>{{ profile.favourite_food }}</p>
-    <p>{{ profile.test_results }}</p>
-
-    {% if profile.get_photos %}
-        <p>My photos</p>
-        {% for photo in profile.get_photos %}
-            <img src="{{ photo.image.url }}" alt="" width="100" height="100">
-            <a href="{{ photo.image.url }}">Image</a>
-        {% endfor %}
     {% else %}
-        <p>No photos yet</p>
+    <h3>{{ profile.user.username }}</h3>
     {% endif %}
-    {% if not request.user.is_superuser %}
-        <form action="{% url 'main:upload_photo' %}" enctype="multipart/form-data" method="post">
-            {% csrf_token %}
-            {{ upload_photo_form.as_p }}
-            <input type="submit" value="Submit">
-        </form>
-    {% endif %}
+    <p>Age: {{ profile.age }}</p>
+    <p>Weight: {{ profile.weight }}</p>
+    <p>Height: {{ profile.height }}</p>
+    <p>Lifestyle: {{ profile.lifestyle }}</p>
+    <p>Blood Pressure: {{ profile.blood_pressure }}</p>
+    <p>Chronic Illness: {{ profile.chronic_illness }}</p>
+    <p>Spine: {{ profile.spine }}</p>
+    <p>Schedule: {{ profile.schedule }}</p>
+    <p>Steps: {{ profile.steps }}</p>
+    <p>Muscles: {{ profile.muscles }}</p>
+    <p>Favourite Food: {{ profile.favourite_food }}</p>
+    <p>Unfavourite Food:{{ profile.unfavourite_food }}</p>
+    <p>Food Allergies: {{ profile.food_allergies }}</p>
+    <p>Test Results: {{ profile.test_results }}</p>
+
+    <hr>
 
     {% if profile.get_all_weights %}
         <p>My progress</p>
@@ -56,6 +39,26 @@
         <form action="{% url 'main:create_weight' %}" method="post">
             {% csrf_token %}
             {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+
+    <hr>
+
+    {% if profile.get_photos %}
+        <p>My photos</p>
+        {% for photo in profile.get_photos %}
+            <img src="{{ photo.image.url }}" alt="" width="100" height="100">
+            <a href="{{ photo.image.url }}">Image</a>
+        {% endfor %}
+    {% else %}
+        <p>No photos yet</p>
+    {% endif %}
+
+    {% if not request.user.is_superuser %}
+        <form action="{% url 'main:upload_photo' %}" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            {{ upload_photo_form.as_p }}
             <input type="submit" value="Submit">
         </form>
     {% endif %}
