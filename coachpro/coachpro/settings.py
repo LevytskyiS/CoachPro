@@ -33,6 +33,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     env("DO_HOST"),
+    "localhost",
+    "127.0.0.1",
 ]
 
 
