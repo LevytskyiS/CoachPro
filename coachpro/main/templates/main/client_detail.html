@@ -8,6 +8,8 @@
         <a href="{% url 'main:client_update' pk=profile.id %}">UPDATE</a>
     {% endif %}
     <h3>{{ profile.user.username }}</h3>
+    <h3>{{ profile.user.first_name }} {{ profile.user.last_name }}</h3>
+    <a href="{{ profile.notepage.get_absolute_url }}">NOTES</a>
     <p>{{ profile.age }}</p>
     <p>{{ profile.weight }}</p>
     <p>{{ profile.height }}</p>

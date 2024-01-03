@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<a href="{% url 'main:index' %}">HOME</a>
+    {% if not notepage.get_all_notes %}
+    <div>No notes</div>
+    {% else %}
+        {% for note in notepage.get_all_notes %}
+        <p>{{ note.text }}</p>
+        <p>{{ note.user.username }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form action="{% url 'main:create_note' pk=notepage.id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+
+{% endblock %}

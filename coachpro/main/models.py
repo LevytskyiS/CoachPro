@@ -20,8 +20,6 @@ class Profile(models.Model):
     spine = models.CharField(max_length=200)
     schedule = models.TextField(max_length=1000)
     steps = models.IntegerField(null=True)
-    # photo_front =
-    # photo_back =
     muscles = models.CharField(max_length=200)
     unfavourite_food = models.CharField(max_length=200)
     food_allergies = models.CharField(max_length=200)
@@ -42,9 +40,6 @@ class Profile(models.Model):
 
     def get_all_weights(self):
         return self.weights.all()
-
-    # def get_all_notes(self):
-    #     return self.notes.all()
 
 
 class Weight(models.Model):
@@ -73,13 +68,14 @@ class File(models.Model):
         return str(self.file)
 
 
-# class Note(models.Model):
-#     profile = models.ForeignKey(Profile, related_name="notes", on_delete=models.CASCADE)
-#     text = models.TextField(max_length=1000, editable=True)
-
-
 class NotePage(models.Model):
     created_at = models.DateField(auto_now_add=True)
+    profile = models.OneToOneField(
+        Profile, related_name="notepage", on_delete=models.CASCADE
+    )
+
+    def get_absolute_url(self):
+        return reverse("main:note_page_detail", kwargs={"pk": self.pk})
 
     def get_all_notes(self):
         return self.notes.all()

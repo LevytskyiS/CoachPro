@@ -18,6 +18,11 @@
             <li>
                 <a href="{{ request.user.profile.get_absolute_url }}">MY PROGRESS</a>
             </li>
+            {% if request.user.is_authenticated and note_page %}
+            <li>
+                <a href="{{ note_page.get_absolute_url }}">MY NOTES</a>
+            </li>
+            {% endif %}
             {% if request.user.is_superuser and request.user.is_authenticated %}
             <li>
                 <a href="{% url 'main:client_list' %}">MY CLIENTS</a>

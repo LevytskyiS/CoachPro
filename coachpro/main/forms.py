@@ -11,10 +11,12 @@ from django.forms import (
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-from .models import Profile, Weight, File, Photo
+from .models import Profile, Weight, File, Photo, Note
 
 
 class RegisterUserForm(UserCreationForm):
+    first_name = CharField(label="First Name", widget=TextInput())
+    last_name = CharField(label="Last Name", widget=TextInput())
     username = CharField(label="Login", widget=TextInput())
     email = EmailField(label="Email", widget=EmailInput())
     password1 = CharField(label="Password", widget=PasswordInput())
@@ -25,7 +27,14 @@ class RegisterUserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = (
+            "first_name",
+            "last_name",
+            "username",
+            "email",
+            "password1",
+            "password2",
+        )
 
 
 class LoginUserForm(AuthenticationForm):
@@ -42,15 +51,6 @@ class CreateWeightForm(ModelForm):
                 attrs={"class": "form-control", "placeholder": "Your current weight"}
             ),
         }
-
-
-# class CreateNoteForm(ModelForm):
-#     class Meta:
-#         model = Note
-#         fields = ["text"]
-#         widgets = {
-#             "message": TextInput(attrs={"class": "form-control"}),
-#         }
 
 
 class UploadFileForm(ModelForm):
@@ -71,3 +71,14 @@ class UploadPhotoForm(ModelForm):
         # widgets = {"image": ImageField()}
         # fields = "__all__"
         image = ImageField()
+
+
+class CreateNoteForm(ModelForm):
+    class Meta:
+        model = Note
+        fields = ["text"]
+        widgets = {
+            "message": TextInput(
+                attrs={"class": "form-control", "placeholder": "Note..."}
+            ),
+        }
