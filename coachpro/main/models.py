@@ -43,6 +43,9 @@ class Profile(models.Model):
     def get_all_weights(self):
         return self.weights.all()
 
+    # def get_all_notes(self):
+    #     return self.notes.all()
+
 
 class Weight(models.Model):
     profile = models.ForeignKey(
@@ -50,9 +53,6 @@ class Weight(models.Model):
     )
     date = models.DateField(auto_now_add=True)
     value = models.DecimalField(max_digits=5, decimal_places=2)
-
-    # def get_absolute_url(self):
-    #     return reverse("main:create_weight", kwargs={"pk": self.pk})
 
 
 class Photo(models.Model):
@@ -73,9 +73,21 @@ class File(models.Model):
         return str(self.file)
 
 
-# class HomePageArticle(models.Model):
-#     title = models.CharField(max_length=200)
-#     content = models.TextField(max_length=1000)
+# class Note(models.Model):
+#     profile = models.ForeignKey(Profile, related_name="notes", on_delete=models.CASCADE)
+#     text = models.TextField(max_length=1000, editable=True)
 
-#     def __str__(self) -> str:
-#         return self.title
+
+class NotePage(models.Model):
+    created_at = models.DateField(auto_now_add=True)
+
+    def get_all_notes(self):
+        return self.notes.all()
+
+
+class Note(models.Model):
+    user = models.ForeignKey(User, related_name="notes", on_delete=models.CASCADE)
+    note_page = models.ForeignKey(
+        NotePage, related_name="notes", on_delete=models.CASCADE
+    )
+    text = models.TextField(max_length=1000, editable=True)

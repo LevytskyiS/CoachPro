@@ -44,6 +44,15 @@ class CreateWeightForm(ModelForm):
         }
 
 
+# class CreateNoteForm(ModelForm):
+#     class Meta:
+#         model = Note
+#         fields = ["text"]
+#         widgets = {
+#             "message": TextInput(attrs={"class": "form-control"}),
+#         }
+
+
 class UploadFileForm(ModelForm):
     class Meta:
         model = File

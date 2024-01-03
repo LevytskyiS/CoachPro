@@ -13,6 +13,7 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
 )
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Profile, Weight, File, Photo
 from .forms import (
@@ -21,6 +22,7 @@ from .forms import (
     CreateWeightForm,
     UploadFileForm,
     UploadPhotoForm,
+    # CreateNoteForm,
 )
 
 
@@ -58,6 +60,7 @@ class ClientDetailView(DetailView):
         context["form"] = CreateWeightForm()
         context["upload_file_form"] = UploadFileForm()
         context["upload_photo_form"] = UploadPhotoForm()
+        # context["note_form"] = CreateNoteForm()
         return context
 
     # def post(self, request, *args, **kwars):
@@ -69,18 +72,18 @@ class ClientUpdateView(UpdateView):
     model = Profile
     fields = [
         "age",
-        # "weight",
-        # "height",
-        # "lifestyle",
-        # "blood_pressure",
-        # "chronic_illness",
-        # "spine",
-        # "schedule",
-        # "muscles",
-        # "unfavourite_food",
-        # "food_allergies",
-        # "favourite_food",
-        # "test_results",
+        "weight",
+        "height",
+        "lifestyle",
+        "blood_pressure",
+        "chronic_illness",
+        "spine",
+        "schedule",
+        "muscles",
+        "unfavourite_food",
+        "food_allergies",
+        "favourite_food",
+        "test_results",
     ]
     template_name_suffix = "_update_form"
 
@@ -100,6 +103,29 @@ class CreateWeight(CreateView):
 
     def get_success_url(self) -> str:
         return self.object.profile.get_absolute_url()
+
+
+# class CreateNoteView(CreateView):
+#     model = Note
+#     form_class = CreateNoteForm
+#     request = HttpRequest()
+
+#     def form_valid(self, form):
+#         # form.instance.post_id = self.kwargs.get("pk")
+#         # profile = Profile.objects.get(user=self.request.user.id)
+#         try:
+#             profile = Profile.objects.get(user=self.request.user.id)
+#         except ObjectDoesNotExist as e:
+#             profile = Profile.objects.get_or_create(
+#                 user=User.objects.get(id=self.request.user.id)
+#             )
+#         form.instance.profile = profile
+#         self.object = form.save()
+#         print(self.object)
+#         return super().form_valid(form)
+
+#     def get_success_url(self) -> str:
+#         return self.object.profile.get_absolute_url()
 
 
 # def upload_file(request):

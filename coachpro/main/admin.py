@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
-from .models import Profile, Photo, File, Weight
+from .models import Profile, Photo, File, Weight, Note, NotePage
 
 
 # Define an inline admin descriptor for Employee model
@@ -24,3 +24,5 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Photo)
 admin.site.register(File)
 admin.site.register(Weight)
+admin.site.register(Note)
+admin.site.register(NotePage)
