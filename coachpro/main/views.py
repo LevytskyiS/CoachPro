@@ -29,11 +29,11 @@ from .forms import (
 def index(request):
     if isinstance(request.user, AnonymousUser):
         return render(request, "main/index.html")
-    if request.user.is_superuser:
-        return render(request, "main/index.html")
-    note_page = NotePage.objects.get(profile=request.user.profile)
-    if note_page:
-        return render(request, "main/index.html", {"note_page": note_page})
+    # if request.user.is_superuser:
+    #     return render(request, "main/index.html")
+    # note_page = NotePage.objects.get(profile=request.user.profile)
+    # if note_page:
+    #     return render(request, "main/index.html", {"note_page": note_page})
     else:
         return render(request, "main/index.html")
 

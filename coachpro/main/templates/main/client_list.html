@@ -12,7 +12,7 @@
     </div>
 
     {% if profiles %}
-        <p>PROFILES</p>
+        <p>Clients</p>
         <ul>    
             {% for profile in profiles %}
             <li><a href="{{ profile.get_absolute_url }}">{{ profile.user.username }}</a></li>

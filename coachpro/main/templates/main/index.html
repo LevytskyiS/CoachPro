@@ -3,49 +3,4 @@
 
 {% block content %}
 
-    <div>
-        <p>HOME PAGE</p>
-    </div>
-    <div>
-        <ul>
-            {% if request.user.is_authenticated %}
-            <li>
-                <a href="{% url 'main:index' %}">HOME</a>
-            </li>
-            <li>
-                <a href="#">MY TRAINIGS</a>
-            </li>
-            <li>
-                <a href="{{ request.user.profile.get_absolute_url }}">MY PROGRESS</a>
-            </li>
-            {% if request.user.is_authenticated and note_page %}
-            <li>
-                <a href="{{ note_page.get_absolute_url }}">MY NOTES</a>
-            </li>
-            {% endif %}
-            {% if request.user.is_superuser and request.user.is_authenticated %}
-            <li>
-                <a href="{% url 'main:client_list' %}">MY CLIENTS</a>
-            </li>
-            {% endif %}
-            {% else %}
-            <div>
-                <p>LOGIN REQUIRED</p>
-                
-            </div>
-            {% endif %}
-            {% if not request.user.is_authenticated %}
-            <a href="{% url 'main:registration' %}">REGISTRATION</a>
-            <a href="{% url 'main:login' %}">LOGIN</a>
-            {% endif %}
-        </ul>
-    </div>
-
-    <!-- Logging out via GET requests to the built-in logout view is deprecated. Use POST requests instead. -->
-    {% if request.user.is_authenticated %}
-    <form method="post" action="{% url 'main:logout' %}">
-        {% csrf_token %}
-        <button type="submit">logout</button>
-    </form>
-    {% endif %}
 {% endblock %}
