@@ -9,7 +9,7 @@
         <p>Clients</p>
         <ul>    
             {% for profile in profiles %}
-            <li><a href="{{ profile.get_absolute_url }}">{{ profile.user.username }}</a></li>
+            <li><a href="{{ profile.get_absolute_url }}">{{ profile.user.first_name }} {{ profile.user.last_name }}</a></li>
             {% endfor %}
         </ul>
     {% else %}

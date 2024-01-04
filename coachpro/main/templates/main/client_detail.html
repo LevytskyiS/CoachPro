@@ -8,6 +8,11 @@
     {% else %}
     <h3>{{ profile.user.username }}</h3>
     {% endif %}
+
+    {% if request.user.is_superuser %}
+        <a href="{{ profile.notepage.get_absolute_url }}">Notes</a>
+    {% endif %}
+    
     <p>Age: {{ profile.age }}</p>
     <p>Weight: {{ profile.weight }}</p>
     <p>Height: {{ profile.height }}</p>
@@ -81,5 +86,6 @@
             <input type="submit" value="Submit">
         </form>
     {% endif %}
+
 </div>
 {% endblock %}

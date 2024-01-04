@@ -7,7 +7,7 @@
     {% else %}
     <h3>My Notes:</h3>
         {% for note in notepage.get_all_notes %}
-        <p><b>{{ note.user.username }}</b></p>
+        <p><b>{{ note.user.first_name }}</b></p>
         <p>{{ note.text }}</p>
         {% endfor %}
     {% endif %}
