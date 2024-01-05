@@ -14,6 +14,7 @@ from django.contrib.auth.views import (
 )
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.messages.views import SuccessMessageMixin
 
 from .models import Profile, Weight, File, Photo, Note, NotePage
 from .forms import (
@@ -148,6 +149,17 @@ class LoginUser(LoginView):
 class LogOutUser(LogoutView):
     # Logging out via GET requests to the built-in logout view is deprecated. Use POST requests instead.
     next_page = "/"
+
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = "main/password_reset.html"
+    email_template_name = "main/password_reset_email.html"
+    html_email_template_name = "main/password_reset_email.html"
+    success_url = reverse_lazy("main:password_reset_done")
+    success_message = (
+        "An email with instructions to reset your password has been sent to %(email)s."
+    )
+    subject_template_name = "main/password_reset_subject.txt"
 
 
 # NotePage

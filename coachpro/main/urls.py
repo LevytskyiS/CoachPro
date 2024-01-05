@@ -1,4 +1,9 @@
 from django.urls import path
+from django.contrib.auth.views import (
+    PasswordResetDoneView,
+    PasswordResetConfirmView,
+    PasswordResetCompleteView,
+)
 
 from . import views
 
@@ -21,6 +26,27 @@ urlpatterns = [
     path("upload_file/", views.UploadFile.as_view(), name="upload_file"),
     path("upload_photo/", views.UploadPhoto.as_view(), name="upload_photo"),
     path("registration/", views.RegisterUser.as_view(), name="registration"),
+    path("reset_password/", views.ResetPasswordView.as_view(), name="password_reset"),
+    path(
+        "reset_password/done/",
+        PasswordResetDoneView.as_view(template_name="main/password_reset_done.html"),
+        name="password_reset_done",
+    ),
+    path(
+        "reset_password/confirm/<uidb64>/<token>/",
+        PasswordResetConfirmView.as_view(
+            template_name="main/password_reset_confirm.html",
+            success_url="/reset_password/complete/",
+        ),
+        name="password_reset_confirm",
+    ),
+    path(
+        "reset_password/complete/",
+        PasswordResetCompleteView.as_view(
+            template_name="main/password_reset_complete.html"
+        ),
+        name="password_reset_complete",
+    ),
     path("login/", views.LoginUser.as_view(), name="login"),
     path("logout/", views.LogOutUser.as_view(), name="logout"),
     path(
