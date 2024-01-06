@@ -45,7 +45,7 @@ class LoginUserForm(AuthenticationForm):
 class CreateWeightForm(ModelForm):
     class Meta:
         model = Weight
-        fields = ["value"]
+        fields = ["value", "sleep_quality", "mood"]
         widgets = {
             "message": TextInput(
                 attrs={"class": "form-control", "placeholder": "Your current weight"}

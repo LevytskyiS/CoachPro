@@ -33,8 +33,10 @@
     {% if profile.get_all_weights %}
         <p>My progress</p>
         {% for weight in profile.get_all_weights %}
-            <p>{{ weight.value }}</p>
-            <p>{{ weight.date }}</p>
+            <p>Date: {{ weight.date }}</p>
+            <p>Weight: {{ weight.value }}</p>
+            <p>Sleep Quality: {{ weight.sleep_quality }}</p>
+            <p>Mood: {{ weight.mood }}</p>
         {% endfor %}
     {% else %}
         <p>No progress added yet</p>

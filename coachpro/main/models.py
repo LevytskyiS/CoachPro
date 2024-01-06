@@ -5,8 +5,8 @@ from django.urls import reverse
 
 class Profile(models.Model):
     LIFESTYLE_CHOICES = {
-        "A": "Active",
-        "P": "Passive",
+        "Active": "Active",
+        "Passive": "Passive",
     }
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_client = models.BooleanField(default=False)
@@ -14,7 +14,7 @@ class Profile(models.Model):
     age = models.IntegerField(null=True)
     weight = models.IntegerField(null=True)
     height = models.IntegerField(null=True)
-    lifestyle = models.CharField(null=True, max_length=1, choices=LIFESTYLE_CHOICES)
+    lifestyle = models.CharField(null=True, max_length=7, choices=LIFESTYLE_CHOICES)
     blood_pressure = models.IntegerField(null=True)
     chronic_illness = models.CharField(max_length=200)
     spine = models.CharField(max_length=200)
@@ -43,11 +43,24 @@ class Profile(models.Model):
 
 
 class Weight(models.Model):
+    SLEEP_QUALITY_CHOICES = {
+        "Good": "Good",
+        "Bad": "Bad",
+    }
+    MOOD_CHOICES = {
+        "Good": "Good",
+        "Bad": "Bad",
+    }
+
     profile = models.ForeignKey(
         Profile, related_name="weights", on_delete=models.CASCADE
     )
     date = models.DateField(auto_now_add=True)
     value = models.DecimalField(max_digits=5, decimal_places=2)
+    sleep_quality = models.CharField(
+        null=True, max_length=4, choices=SLEEP_QUALITY_CHOICES
+    )
+    mood = models.CharField(null=True, max_length=4, choices=MOOD_CHOICES)
 
 
 class Photo(models.Model):
