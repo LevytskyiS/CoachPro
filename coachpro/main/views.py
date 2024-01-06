@@ -150,7 +150,6 @@ class UpdateWeightView(UpdateView):
 
 class DeleteWeightView(DeleteView):
     model = Weight
-    request = HttpRequest()
     template_name_suffix = "_confirm_delete"
 
     def get_success_url(self) -> str:
@@ -217,6 +216,25 @@ class CreateNoteView(CreateView):
         form.instance.user = user
         self.object = form.save()
         return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        return self.object.note_page.get_absolute_url()
+
+
+class UpdateNoteView(UpdateView):
+    model = Note
+    fields = [
+        "text",
+    ]
+    template_name_suffix = "_update_form"
+
+    def get_success_url(self) -> str:
+        return self.object.note_page.get_absolute_url()
+
+
+class DeleteNoteView(DeleteView):
+    model = Note
+    template_name_suffix = "_confirm_delete"
 
     def get_success_url(self) -> str:
         return self.object.note_page.get_absolute_url()
