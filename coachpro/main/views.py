@@ -3,7 +3,14 @@ from django.contrib import messages
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, FormView, UpdateView
+from django.views.generic import (
+    ListView,
+    CreateView,
+    DetailView,
+    FormView,
+    UpdateView,
+    DeleteView,
+)
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import (
@@ -48,6 +55,7 @@ class ClientListView(ListView):
         return Profile.objects.filter(is_client=True).filter(user__is_active=True)
 
 
+# Client profile updates (profile data, uploading/removing photos and files)
 class ClientDetailView(DetailView):
     model = Profile
     template_name = "main/client_detail.html"
@@ -80,22 +88,6 @@ class ClientUpdateView(UpdateView):
     template_name_suffix = "_update_form"
 
 
-class CreateWeight(CreateView):
-    model = Weight
-    form_class = CreateWeightForm
-    request = HttpRequest()
-
-    def form_valid(self, form):
-        # form.instance.post_id = self.kwargs.get("pk")
-        profile = Profile.objects.get(user=self.request.user.id)
-        form.instance.profile = profile
-        self.object = form.save()
-        return super().form_valid(form)
-
-    def get_success_url(self) -> str:
-        return self.object.profile.get_absolute_url()
-
-
 class UploadFile(FormView):
     form_class = UploadFileForm
     template_name = "main/client_detail.html"
@@ -126,6 +118,46 @@ class UploadPhoto(FormView):
             return HttpResponseRedirect(profile.get_absolute_url())
 
 
+# Weight objects creating, updating, deleting
+class CreateWeight(CreateView):
+    model = Weight
+    form_class = CreateWeightForm
+    request = HttpRequest()
+
+    def form_valid(self, form):
+        # form.instance.post_id = self.kwargs.get("pk")
+        profile = Profile.objects.get(user=self.request.user.id)
+        form.instance.profile = profile
+        self.object = form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        return self.object.profile.get_absolute_url()
+
+
+class UpdateWeightView(UpdateView):
+    model = Weight
+    fields = [
+        "value",
+        "sleep_quality",
+        "mood",
+    ]
+    template_name_suffix = "_update_form"
+
+    def get_success_url(self) -> str:
+        return self.object.profile.get_absolute_url()
+
+
+class DeleteWeightView(DeleteView):
+    model = Weight
+    request = HttpRequest()
+    template_name_suffix = "_confirm_delete"
+
+    def get_success_url(self) -> str:
+        return self.object.profile.get_absolute_url()
+
+
+# User registraiotn, login, logout, password reset
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
     template_name = "main/registration.html"
@@ -162,7 +194,7 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     subject_template_name = "main/password_reset_subject.txt"
 
 
-# NotePage
+# NotePage and Note objects create, update, delete
 class NotePageDetailView(DetailView):
     model = NotePage
     template_name = "main/note_page_detail.html"

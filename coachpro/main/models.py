@@ -62,6 +62,9 @@ class Weight(models.Model):
     )
     mood = models.CharField(null=True, max_length=4, choices=MOOD_CHOICES)
 
+    def get_absolute_url(self):
+        return reverse("main:client_detail", kwargs={"pk": self.pk})
+
 
 class Photo(models.Model):
     profile = models.ForeignKey(

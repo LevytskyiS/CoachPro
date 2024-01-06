@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if not request.user.is_superuser and request.user.is_authenticated %}
+        <form method="post" action="{% url 'main:update_weight' pk=weight.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Update">
+        </form>
+    {% endif %}
+{% endblock %}
