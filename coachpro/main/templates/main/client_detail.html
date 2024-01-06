@@ -36,12 +36,14 @@
             <p>Weight: {{ weight.value }}</p>
             <p>Sleep Quality: {{ weight.sleep_quality }}</p>
             <p>Mood: {{ weight.mood }}</p>
+            {% if request.user.profile.id == profile.id %}
             <div>
                 <a href="{% url 'main:update_weight' pk=weight.id %}">Edit</a>
             </div>
             <div>
                 <a href="{% url 'main:delete_weight' pk=weight.id %}">Delete</a>
             </div>
+            {% endif %}
         {% endfor %}
     {% else %}
         <p>No progress added yet</p>
