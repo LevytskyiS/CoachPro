@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+    <form method="post" action="{% url 'training:delete_training' pk=object.id %}">
+        {% csrf_token %}
+        <p>Are you sure you want to delete the plan?</p>
+        {{ form }}
+        <input type="submit" value="Confirm">
+    </form>
+    {% endif %}
+{% endblock %}

@@ -14,9 +14,11 @@
                 <a href="{% url 'main:index' %}">Home</a>
             </li>
             {% if request.user.is_authenticated %}
+            {% if request.user.profile.trainingpage.get_absolute_url %}
             <li>
-                <a href="#">Trainig plan</a>
+                <a href="{% url 'training:training_page_detail' pk=request.user.profile.trainingpage.id %}">Trainig plan</a>
             </li>
+            {% endif %}
             <li>
                 <a href="{{ request.user.profile.get_absolute_url }}">My Stats</a>
             </li>

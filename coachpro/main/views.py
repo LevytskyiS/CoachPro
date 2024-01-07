@@ -32,6 +32,7 @@ from .forms import (
     UploadPhotoForm,
     CreateNoteForm,
 )
+from training.models import TrainingPage
 
 
 def index(request):
@@ -168,6 +169,8 @@ class RegisterUser(CreateView):
         profile.save()
         note_page = NotePage(profile=profile)
         note_page.save()
+        training_page = TrainingPage(profile=profile)
+        training_page.save()
         login(self.request, user)
         return redirect("/")
 

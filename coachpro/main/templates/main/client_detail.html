@@ -11,6 +11,7 @@
 
     {% if request.user.is_superuser %}
         <a href="{{ profile.notepage.get_absolute_url }}">Notes</a>
+        <a href="{{ profile.trainingpage.get_absolute_url }}">Training Plan</a>
     {% endif %}
     
     <p>Age: {{ profile.age }}</p>
