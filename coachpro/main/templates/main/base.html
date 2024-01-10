@@ -19,14 +19,14 @@
                 <a href="{% url 'training:training_page_detail' pk=request.user.profile.trainingpage.id %}">Trainig plan</a>
             </li>
             {% endif %}
-            <li>
-                <a href="{{ request.user.profile.get_absolute_url }}">My Stats</a>
-            </li>
             {% if request.user.profile.notepage.get_absolute_url %}
             <li>
                 <a href="{{ request.user.profile.notepage.get_absolute_url }}">My Notes</a>
             </li>
             {% if request.user.is_authenticated and not request.user.is_superuser %}
+            <li>
+                <a href="{{ request.user.profile.get_absolute_url }}">My Stats</a>
+            </li>
             <li>
                 <a href="{% url 'main:client_update' pk=request.user.profile.id %}">Update Profile</a>
             </li>
