@@ -165,7 +165,7 @@ class RegisterUser(CreateView):
         training_page = TrainingPage(profile=profile)
         training_page.save()
         login(self.request, user)
-        return redirect("/")
+        return redirect("main:client_update", user.profile.id)
 
 
 class LoginUser(LoginView):

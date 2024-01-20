@@ -8,5 +8,6 @@
             {{ form.as_p }}
             <input type="submit" value="Update">
         </form>
+        <a href="{{ request.user.profile.get_absolute_url }}">Back</a>
     {% endif %}
 {% endblock %}
