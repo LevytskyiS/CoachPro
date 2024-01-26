@@ -7,54 +7,17 @@
     <title>Document</title>
 </head>
 <body>
-    <!-- Navbar -->
+
     <div>
         <ul>
             <li>
                 <a href="{% url 'main:index' %}">Home</a>
             </li>
-            {% if request.user.is_authenticated %}
-            {% if request.user.profile.trainingpage.get_absolute_url %}
-            <li>
-                <a href="{% url 'training:training_page_detail' pk=request.user.profile.trainingpage.id %}">Trainig plan</a>
-            </li>
-            {% endif %}
-            {% if request.user.profile.notepage.get_absolute_url %}
-            <li>
-                <a href="{{ request.user.profile.notepage.get_absolute_url }}">My Notes</a>
-            </li>
-            {% if request.user.is_authenticated and not request.user.is_superuser %}
-            <li>
-                <a href="{{ request.user.profile.get_absolute_url }}">My Stats</a>
-            </li>
-            <li>
-                <a href="{% url 'main:client_update' pk=request.user.profile.id %}">Update Profile</a>
-            </li>
-            {% endif %}
-            <!-- Logging out via GET requests to the built-in logout view is deprecated. Use POST requests instead. -->
-            {% endif %}
-            {% if request.user.is_superuser %}
-            <li>
-                <a href="{% url 'main:client_list' %}">My Clients</a>
-            </li>
-            {% endif %}
-            <form method="post" action="{% url 'main:logout' %}">
-                {% csrf_token %}
-                <button type="submit">logout</button>
-            </form>   
-            {% else %}
-            <li>
-                <a href="{% url 'main:registration' %}">Registration</a>
-            </li>            
-            <li>
-                <a href="{% url 'main:login' %}">Login</a>
-            </li>            
-            {% endif %}
-
         </ul>
     </div>
+
     {% block content %}
     {% endblock %}
+    
 </body>
 </html>
-
