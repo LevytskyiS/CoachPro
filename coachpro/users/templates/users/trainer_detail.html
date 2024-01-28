@@ -1,0 +1,12 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <p>Trainer's profile</p>
+    {{ trainer }}
+    {% for client in trainer.profile.get_clients %}
+        <a href="{{ client.profile.get_absolute_url_client }}">{{ client }}</a>
+    {% endfor %}
+    
+{% endblock %}

@@ -13,15 +13,39 @@ from django.views.generic import (
 
 
 def index(request):
-    return render(request, "main/index.html")
+    return render(request, "users/index.html")
 
 
 # Clients section
 class ClientListView(ListView):
     model = User
-    template_name = "main/client_list.html"
+    template_name = "users/client_list.html"
     context_object_name = "users"
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
-        return User.objects.filter(profile__is_client=True).filter(is_active=True)
+        users = User.objects.filter(is_active=True).filter(profile__is_client=True)
+        return users
+
+
+class ClientDetailView(DetailView):
+    model = User
+    template_name = "users/client_detail.html"
+
+
+# Coach section
+class TrainerListView(ListView):
+    model = User
+    template_name = "users/trainer_list.html"
+    context_object_name = "trainers"
+    paginate_by = 5
+
+    def get_queryset(self):
+        trainers = User.objects.filter(is_active=True).filter(profile__is_coach=True)
+        return trainers
+
+
+class TrainerDetailView(DetailView):
+    model = User
+    template_name = "users/trainer_detail.html"
+    context_object_name = "trainer"

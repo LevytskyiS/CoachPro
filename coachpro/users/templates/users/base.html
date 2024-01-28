@@ -11,8 +11,16 @@
     <div>
         <ul>
             <li>
-                <a href="{% url 'main:index' %}">Home</a>
+                <a href="{% url 'users:index' %}">Home</a>
             </li>
+            {% if request.user.is_superuser %}
+            <li>
+                <a href="{% url 'users:client_list' %}">All clients</a>
+            </li>
+            <li>
+                <a href="{% url 'users:trainer_list' %}">All trainers</a>
+            </li>
+            {% endif %}
         </ul>
     </div>
 

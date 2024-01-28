@@ -8,7 +8,7 @@ class Profile(models.Model):
         "Active": "Active",
         "Passive": "Passive",
     }
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name="profile", on_delete=models.CASCADE)
     is_client = models.BooleanField(default=False)
     is_coach = models.BooleanField(default=False)
     coach = models.ManyToManyField(User, related_name="coach", blank=True, null=True)
@@ -34,3 +34,16 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username + "'s profile"
+
+    def get_absolute_url_client(self):
+        return reverse("users:client_detail", kwargs={"pk": self.user.pk})
+
+    def get_absolute_url_trainer(self):
+        return reverse("users:trainer_detail", kwargs={"pk": self.user.pk})
+
+    def get_trainer(self):
+        return self.coach.all()[0]
+
+    def get_clients(self):
+        print(self.clients.all())
+        return self.clients.all()
