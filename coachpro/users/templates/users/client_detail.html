@@ -8,10 +8,12 @@
     <a href="{{ user.profile.get_trainer.profile.get_absolute_url_trainer }}">Trainer: {{ user.profile.get_trainer }}</a>
 
     {% for report in user.reports.all %}
-        <p>{{ report.weight.value }}</p>
+        <p>{{ report.weight }}</p>
         <p>{{ report.sleep_quality }}</p>
         <p>{{ report.mood }}</p>
         <p>{{ report.date }}</p>
+            <a href="{% url 'progress:update_report' pk=report.id %}">Edit</a>
+            <a href="{% url 'progress:delete_report' pk=report.id %}">Delete</a>
         <hr>
     {% endfor %}
     
