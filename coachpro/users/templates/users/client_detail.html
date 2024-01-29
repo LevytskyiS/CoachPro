@@ -7,4 +7,52 @@
     {{ user }}
     <a href="{{ user.profile.get_trainer.profile.get_absolute_url_trainer }}">Trainer: {{ user.profile.get_trainer }}</a>
 
+    {% for report in user.reports.all %}
+        <p>{{ report.weight.value }}</p>
+        <p>{{ report.sleep_quality }}</p>
+        <p>{{ report.mood }}</p>
+        <p>{{ report.date }}</p>
+        <hr>
+    {% endfor %}
+    
+    {% if not request.user.is_superuser %}
+        <h5>Add new record</h5>
+        <form action="{% url 'progress:create_report' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+
+    {% if not request.user.is_superuser %}
+        <form action="{% url 'progress:upload_photo' %}" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            {{ upload_photo_form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+
+    {% for photo in user.photo.all %}
+        <img src="{{ photo.image.url }}" alt="" width="100" height="100">
+        <a href="{{ photo.image.url }}">Image</a>
+    {% endfor %}
+
+    {% if not request.user.is_superuser %}
+        <form action="{% url 'progress:upload_file' %}" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            {{ upload_file_form }}
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+
+    {% if user.file.all %}
+        <p>My files</p>
+        {% for file in user.file.all %}
+            <a href="{{ file.file.url }}">File</a>
+        {% endfor %}
+    {% else %}
+        <p>No files yet</p>
+    {% endif %}
+
+
 {% endblock %}

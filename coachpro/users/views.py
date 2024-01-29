@@ -10,10 +10,31 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from django.contrib.auth.views import (
+    LoginView,
+    PasswordResetView,
+    LogoutView,
+    PasswordResetConfirmView,
+)
+
+from .forms import LoginUserForm
+from progress.forms import CreateReporttForm, UploadFileForm, UploadPhotoForm
 
 
 def index(request):
     return render(request, "users/index.html")
+
+
+# Log in
+class LoginUser(LoginView):
+    form_class = LoginUserForm
+    template_name = "users/login.html"
+
+
+# Log out
+class LogOutUser(LogoutView):
+    # Logging out via GET requests to the built-in logout view is deprecated. Use POST requests instead.
+    next_page = "/"
 
 
 # Clients section
@@ -31,6 +52,13 @@ class ClientListView(ListView):
 class ClientDetailView(DetailView):
     model = User
     template_name = "users/client_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = CreateReporttForm()
+        context["upload_file_form"] = UploadFileForm()
+        context["upload_photo_form"] = UploadPhotoForm()
+        return context
 
 
 # Coach section

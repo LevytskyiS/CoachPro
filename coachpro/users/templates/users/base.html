@@ -24,6 +24,19 @@
         </ul>
     </div>
 
+    <div>
+        <ul>
+            <li>
+                <a href="{% url 'users:login' %}">Login</a>
+            </li>
+            <li>
+                <form method="post" action="{% url 'users:logout' %}">
+                {% csrf_token %}
+                <button type="submit">logout</button>
+            </form> 
+            </li>
+        </ul>
+    </div>
     {% block content %}
     {% endblock %}
     
