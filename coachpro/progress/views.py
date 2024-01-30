@@ -1,6 +1,6 @@
 from typing import Any
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.views.generic import (
     ListView,
@@ -11,6 +11,8 @@ from django.views.generic import (
     DeleteView,
 )
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.urls import reverse_lazy
+from django.contrib import messages
 
 from .models import Report, Photo, File
 from .forms import CreateReporttForm, UploadPhotoForm, UploadFileForm
@@ -85,3 +87,11 @@ class UploadFile(FormView):
             file = form.save()
             file.save()
             return HttpResponseRedirect(user.profile.get_absolute_url_client())
+
+
+class FileDeleteView(DeleteView):
+    model = File
+    template_name_suffix = "_confirm_delete"
+
+    def get_success_url(self) -> str:
+        return self.object.user.profile.get_absolute_url_client()
