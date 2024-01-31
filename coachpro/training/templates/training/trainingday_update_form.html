@@ -1,0 +1,10 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+        <form method="post" action="{% url 'training:update_training_day' pk=training_day.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Update">
+        </form>
+{% endblock %}

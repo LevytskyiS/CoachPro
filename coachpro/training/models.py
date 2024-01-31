@@ -6,7 +6,7 @@ from django.urls import reverse
 class TrainingPage(models.Model):
     created_at = models.DateField(auto_now_add=True)
     user = models.OneToOneField(
-        User, related_name="trainingpage", on_delete=models.CASCADE
+        User, related_name="training_pages", on_delete=models.CASCADE
     )
 
     def __str__(self):
@@ -18,9 +18,6 @@ class TrainingPage(models.Model):
 
 class Training(models.Model):
     exercise = models.CharField(max_length=256)
-    weight = models.PositiveIntegerField()
-    reps = models.PositiveSmallIntegerField()
-    sets = models.PositiveSmallIntegerField()
 
     def __str__(self):
         return self.exercise
@@ -28,9 +25,18 @@ class Training(models.Model):
 
 class TrainingDay(models.Model):
     training_page = models.ForeignKey(
-        TrainingPage, related_name="training_pages", on_delete=models.CASCADE
+        TrainingPage, related_name="training_days", on_delete=models.CASCADE
     )
-    training = models.ManyToManyField(Training, related_name="training_days")
+    training = models.ManyToManyField(Training)
 
     def __str__(self):
         return f"Training day of {self.training_page.user}"
+
+
+class TrainingStats(models.Model):
+    training = models.ForeignKey(
+        Training, related_name="training_stats", on_delete=models.CASCADE
+    )
+    weight = models.PositiveIntegerField()
+    reps = models.PositiveSmallIntegerField()
+    sets = models.PositiveSmallIntegerField()

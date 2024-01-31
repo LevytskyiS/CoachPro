@@ -1,0 +1,30 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+    {{ training_page }}
+    {% for training_day in training_page.training_days.all %}
+        <hr>
+        {{ training_day }}
+        {% for training in training_day.training.all %}
+            <p>{{ training }}</p>
+            {% if training.weight and training.reps and training.sets %}
+            <p>STATS</p>
+            {% else %}
+            <form action="{% url 'training:create_training_stats' pk=training.id %}" method="post">
+                {% csrf_token %}
+                {{ form_training_stats }}
+                <input type="submit" value="Submit">
+            </form>
+            {% endif %}
+            {% endfor %}
+        <a href="{% url 'training:update_training_day' pk=training_day.id %}">Edit</a>
+        <a href="{% url 'training:delete_training_day' pk=training_day.id %}">Delete</a>
+        <hr>
+    {% endfor %}
+    <form action="{% url 'training:create_training_day' pk=training_page.id %}" method="post">
+        {% csrf_token %}
+        {{ form_training_day }}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}
