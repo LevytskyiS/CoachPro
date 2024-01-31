@@ -37,6 +37,7 @@
     {% for photo in user.photo.all %}
         <img src="{{ photo.image.url }}" alt="" width="100" height="100">
         <a href="{{ photo.image.url }}">Image</a>
+        <a href="{% url 'progress:delete_photo' pk=photo.id %}">Delete</a>
     {% endfor %}
 
     {% if not request.user.is_superuser %}

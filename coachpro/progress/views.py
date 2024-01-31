@@ -72,6 +72,14 @@ class UploadPhoto(FormView):
             return HttpResponseRedirect(user.profile.get_absolute_url_client())
 
 
+class PhotoDeleteView(DeleteView):
+    model = Photo
+    template_name_suffix = "_confirm_delete"
+
+    def get_success_url(self) -> str:
+        return self.object.user.profile.get_absolute_url_client()
+
+
 # File section
 class UploadFile(FormView):
     form_class = UploadFileForm

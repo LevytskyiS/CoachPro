@@ -38,6 +38,17 @@ class Photo(models.Model):
     def str(self) -> str:
         return str(self.image)
 
+    def get_absolute_url(self):
+        return reverse("users:client_detail", kwargs={"pk": self.pk})
+
+    def delete(self, *args, **kwargs):
+        # You have to prepare what you need before delete the model
+        storage, path = self.image.storage, self.image.path
+        # Delete the model before the file
+        super(Photo, self).delete(*args, **kwargs)
+        # Delete the file after the model
+        storage.delete(path)
+
 
 class File(models.Model):
     user = models.ForeignKey(User, related_name="file", on_delete=models.CASCADE)
