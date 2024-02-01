@@ -24,9 +24,4 @@ urlpatterns = [
         views.DeleteTrainingDayView.as_view(),
         name="delete_training_day",
     ),
-    path(
-        "create_stats/<int:pk>/",
-        views.CreateTrainingStatsView.as_view(),
-        name="create_training_stats",
-    ),
 ]

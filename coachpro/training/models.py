@@ -27,16 +27,8 @@ class TrainingDay(models.Model):
     training_page = models.ForeignKey(
         TrainingPage, related_name="training_days", on_delete=models.CASCADE
     )
+    day = models.CharField(max_length=256)
     training = models.ManyToManyField(Training)
 
     def __str__(self):
         return f"Training day of {self.training_page.user}"
-
-
-class TrainingStats(models.Model):
-    training = models.ForeignKey(
-        Training, related_name="training_stats", on_delete=models.CASCADE
-    )
-    weight = models.PositiveIntegerField()
-    reps = models.PositiveSmallIntegerField()
-    sets = models.PositiveSmallIntegerField()
