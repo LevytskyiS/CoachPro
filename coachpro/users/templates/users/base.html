@@ -30,6 +30,9 @@
             <li>
                 <a href="{{ request.user.profile.get_absolute_url_client }}">My profile (Client)</a>
             </li>
+            <li>
+                <a href="{{ request.user.training_pages.get_absolute_url }}">My Trainings (Client)</a>
+            </li>
             {% endif %}
             {% if request.user.is_authenticated %}
             <li>

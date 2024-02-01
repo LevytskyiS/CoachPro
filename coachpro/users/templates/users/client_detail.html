@@ -9,6 +9,10 @@
             Trainer:<br/>
             <a href="{{ user.profile.get_trainer.profile.get_absolute_url_trainer }}">{{ user.profile.get_trainer.first_name }} {{ user.profile.get_trainer.last_name }}</a><br/><br/>
 
+            {% if request.user.profile.is_coach and request.user.id == user.profile.get_trainer.id %}
+                <a href="{{ user.training_pages.get_absolute_url }}">Client's training plan</a><br/><br/>
+            {% endif %}
+
             BASIC DATA:<br/><br/>
             Age: {{ user.profile.age }}<br/>
             Weight: {{ user.profile.weight }}<br/>
