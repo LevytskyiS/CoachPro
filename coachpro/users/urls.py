@@ -14,6 +14,11 @@ urlpatterns = [
     path("clients/", views.ClientListView.as_view(), name="client_list"),
     # Client's profile
     path("profile/<int:pk>", views.ClientDetailView.as_view(), name="client_detail"),
+    path(
+        "profile_update/<int:pk>",
+        views.UpdateUserProfileView.as_view(),
+        name="profile_update",
+    ),
     # List of trainers
     path("trainers/", views.TrainerListView.as_view(), name="trainer_list"),
     # Trainer's profile

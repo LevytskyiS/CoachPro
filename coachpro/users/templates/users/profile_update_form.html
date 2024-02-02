@@ -1,0 +1,15 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    {% if not request.user.is_superuser and request.user.is_authenticated %}
+        <form method="post" action="{% url 'users:profile_update' pk=request.user.profile.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Update">
+        </form>
+        <a href="{{ request.user.profile.get_absolute_url_client }}">Back</a>
+    {% endif %}
+
+{% endblock %}

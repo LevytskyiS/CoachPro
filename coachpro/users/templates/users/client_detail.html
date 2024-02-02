@@ -29,6 +29,8 @@
             Fav Food: {{ user.profile.favourite_food }}<br/>
             Test results: {{ user.profile.test_results }}<br/><br/>
 
+            <a href="{% url 'users:profile_update' pk=user.profile.id %}">Edit Profile</a><br/><br/>
+
             EDIT PROFILE LINK<br/><br/>
 
             REPORTS:<br/><br/>

@@ -17,7 +17,8 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
 )
 
-from .forms import LoginUserForm
+from .forms import LoginUserForm, UpdateUserProfileForm
+from .models import Profile
 from progress.forms import CreateReporttForm, UploadFileForm, UploadPhotoForm
 
 
@@ -56,9 +57,33 @@ class ClientDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = CreateReporttForm()
+        context["edit_profile_form"] = UpdateUserProfileForm()
         context["upload_file_form"] = UploadFileForm()
         context["upload_photo_form"] = UploadPhotoForm()
         return context
+
+
+class UpdateUserProfileView(UpdateView):
+    model = Profile
+    template_name_suffix = "_update_form"
+    fields = [
+        "age",
+        "weight",
+        "height",
+        "lifestyle",
+        "blood_pressure",
+        "chronic_illness",
+        "spine",
+        "schedule",
+        "muscles",
+        "unfavourite_food",
+        "food_allergies",
+        "favourite_food",
+        "test_results",
+    ]
+
+    def get_success_url(self) -> str:
+        return self.object.get_absolute_url_client()
 
 
 # Coach section
