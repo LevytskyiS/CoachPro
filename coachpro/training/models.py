@@ -23,12 +23,29 @@ class Training(models.Model):
         return self.exercise
 
 
+class TrainingStats(models.Model):
+    weight = models.PositiveIntegerField()
+    reps = models.PositiveSmallIntegerField()
+    sets = models.PositiveSmallIntegerField()
+
+
 class TrainingDay(models.Model):
-    training_page = models.ForeignKey(
-        TrainingPage, related_name="training_days", on_delete=models.CASCADE
-    )
     day = models.CharField(max_length=256)
-    training = models.ManyToManyField(Training)
+    training_page = models.ForeignKey(
+        TrainingPage, related_name="training_page", on_delete=models.CASCADE
+    )
 
     def __str__(self):
         return f"Training day of {self.training_page.user}"
+
+
+class TrainingInfo(models.Model):
+    training = models.ForeignKey(
+        Training, related_name="training_info", on_delete=models.CASCADE
+    )
+    stats = models.ForeignKey(
+        TrainingStats, related_name="training_stats", on_delete=models.CASCADE
+    )
+    workout_info = models.ForeignKey(
+        TrainingDay, related_name="workout_info", on_delete=models.CASCADE
+    )
