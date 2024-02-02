@@ -3,13 +3,15 @@
 
 {% block content %}
     {{ training_page }}
-    {% for training_day in training_page.training_days.all %}
+    {% for training_day in training_page.training_day.all %}
         <hr>
         {{ training_day.day }}<br/>
-        {{ training_day.user }}<br/>
-        <p>EXERCISES</p>
-        {% for training in training_day.training.all %}
-            {{ training }}<br/>
+        EXERCISES<br/><br/>
+        {% for training_info in training_day.workout_info.all %}
+            {{ training_info.training.exercise }}<br/>
+            Weight: {{ training_info.stats.weight }}<br/>
+            Reps: {{ training_info.stats.reps }}<br/>
+            Sets: {{ training_info.stats.sets }}<br/><br/>
         {% endfor %}<br/>
         <a href="{% url 'training:update_training_day' pk=training_day.id %}">Edit</a>
         <a href="{% url 'training:delete_training_day' pk=training_day.id %}">Delete</a>

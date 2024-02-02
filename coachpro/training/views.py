@@ -10,7 +10,7 @@ from django.views.generic import (
 from django.http import HttpRequest
 from django.contrib.auth.models import User
 
-from .models import TrainingPage, TrainingDay, Training
+from .models import TrainingPage, TrainingDay, Training, TrainingStats, TrainingInfo
 from .forms import CreateTrainingDayForm
 
 
@@ -45,7 +45,7 @@ class CreateTrainingDayView(CreateView):
 class UpdateTrainingDayView(UpdateView):
     model = TrainingDay
     context_object_name = "training_day"
-    fields = ["day", "training"]
+    fields = ["day"]
     template_name_suffix = "_update_form"
 
     def get_success_url(self) -> str:
