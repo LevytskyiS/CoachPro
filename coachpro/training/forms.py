@@ -19,3 +19,9 @@ class CreateTrainingStatsForm(ModelForm):
     class Meta:
         model = TrainingStats
         exclude = ["training_info"]
+
+
+class CreateTrainingInfoForm(ModelForm):
+    class Meta:
+        model = TrainingInfo
+        exclude = ["training_day"]

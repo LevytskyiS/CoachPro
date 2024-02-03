@@ -11,7 +11,12 @@ from django.http import HttpRequest
 from django.contrib.auth.models import User
 
 from .models import TrainingPage, TrainingDay, Training, TrainingStats, TrainingInfo
-from .forms import CreateTrainingDayForm, UpdateTrainingStats, CreateTrainingStatsForm
+from .forms import (
+    CreateTrainingDayForm,
+    UpdateTrainingStats,
+    CreateTrainingStatsForm,
+    CreateTrainingInfoForm,
+)
 
 
 # Training page
@@ -23,6 +28,7 @@ class TrainingPageDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form_training_day"] = CreateTrainingDayForm()
+        context["create_training_info_form"] = CreateTrainingInfoForm()
         context["create_training_stats_form"] = CreateTrainingStatsForm()
         context["update_training_stats_form"] = UpdateTrainingStats()
         return context
@@ -63,6 +69,21 @@ class DeleteTrainingDayView(DeleteView):
         return self.object.training_page.get_absolute_url()
 
 
+class CreateTrainingInfoView(CreateView):
+    model = TrainingInfo
+    form_class = CreateTrainingInfoForm
+    request = HttpRequest()
+
+    def form_valid(self, form):
+        training_day = TrainingDay.objects.get(id=self.kwargs.get("pk"))
+        form.instance.training_day = training_day
+        self.object = form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        return self.object.training_day.training_page.get_absolute_url()
+
+
 # Training stats
 class CreateTrainingStatsView(CreateView):
     model = TrainingStats
@@ -76,9 +97,7 @@ class CreateTrainingStatsView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self) -> str:
-        training_info = TrainingInfo.objects.get(training_stats=self.kwargs.get("pk"))
-        training_day = TrainingDay.objects.get(workout_info=training_info)
-        return training_day.training_page.get_absolute_url()
+        return self.object.training_info.training_day.training_page.get_absolute_url()
 
 
 class UpdateTrainingStatsView(UpdateView):
