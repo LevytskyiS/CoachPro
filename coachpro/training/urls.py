@@ -24,4 +24,9 @@ urlpatterns = [
         views.DeleteTrainingDayView.as_view(),
         name="delete_training_day",
     ),
+    path(
+        "update_stats/<int:pk>/",
+        views.UpdateTrainingStatsView.as_view(),
+        name="update_training_stats",
+    ),
 ]

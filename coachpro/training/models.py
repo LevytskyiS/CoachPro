@@ -24,9 +24,9 @@ class Training(models.Model):
 
 
 class TrainingStats(models.Model):
-    weight = models.PositiveIntegerField(default=1)
-    reps = models.PositiveSmallIntegerField(default=1)
-    sets = models.PositiveSmallIntegerField(default=1)
+    weight = models.DecimalField(max_digits=4, decimal_places=1)
+    reps = models.PositiveSmallIntegerField()
+    sets = models.PositiveSmallIntegerField()
 
 
 class TrainingDay(models.Model):

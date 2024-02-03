@@ -12,10 +12,16 @@
             Weight: {{ training_info.stats.weight }}<br/>
             Reps: {{ training_info.stats.reps }}<br/>
             Sets: {{ training_info.stats.sets }}<br/><br/>
+            <a href="{% url 'training:update_training_stats' pk=training_info.stats.id %}">Update W, R, S</a><br/><br/>
         {% endfor %}<br/>
-        <a href="{% url 'training:update_training_day' pk=training_day.id %}">Edit</a>
-        <a href="{% url 'training:delete_training_day' pk=training_day.id %}">Delete</a>
+
+        {% if request.user.profile.is_coach or request.user.is_superuser %}
+
+        <a href="{% url 'training:update_training_day' pk=training_day.id %}">Edit Day Name</a>
+        <a href="{% url 'training:delete_training_day' pk=training_day.id %}">Delete Day Name</a>
         <hr>
+        
+        {% endif %}
     {% endfor %}
     <form action="{% url 'training:create_training_day' pk=training_page.id %}" method="post">
         {% csrf_token %}

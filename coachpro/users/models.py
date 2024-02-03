@@ -16,8 +16,8 @@ class Profile(models.Model):
         User, related_name="clients", blank=True, null=True
     )
     age = models.IntegerField(blank=True, null=True)
-    weight = models.IntegerField(blank=True, null=True)
-    height = models.IntegerField(blank=True, null=True)
+    weight = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    height = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     lifestyle = models.CharField(
         max_length=7, choices=LIFESTYLE_CHOICES, blank=True, null=True
     )

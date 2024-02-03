@@ -7,3 +7,9 @@ class CreateTrainingDayForm(ModelForm):
     class Meta:
         model = TrainingDay
         fields = ["day"]
+
+
+class UpdateTrainingStats(ModelForm):
+    class Meta:
+        model = TrainingStats
+        exclude = []
