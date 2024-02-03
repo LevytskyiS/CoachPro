@@ -41,6 +41,9 @@ class TrainingInfo(models.Model):
         Training, related_name="training_info", on_delete=models.CASCADE
     )
 
+    def get_absolute_url(self):
+        return reverse("training:training_page_detail", kwargs={"pk": self.pk})
+
 
 class TrainingStats(models.Model):
     training_info = models.ForeignKey(

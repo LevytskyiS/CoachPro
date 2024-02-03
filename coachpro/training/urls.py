@@ -30,6 +30,11 @@ urlpatterns = [
         name="create_training_info",
     ),
     path(
+        "delete_info/<int:pk>/",
+        views.DeleteTrainingInfoView.as_view(),
+        name="delete_training_info",
+    ),
+    path(
         "create_stats/<int:pk>/",
         views.CreateTrainingStatsView.as_view(),
         name="create_training_stats",

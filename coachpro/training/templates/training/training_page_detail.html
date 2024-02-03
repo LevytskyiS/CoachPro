@@ -26,7 +26,9 @@
                 <input type="submit" value="Submit">
             </form>
             <br/><br/>
+            <a href="{% url 'training:delete_training_info' pk=training_info.id %}">Удалить упражнение</a>
         {% endfor %}<br/>
+        Добавление упражнения <br/>
         <form action="{% url 'training:create_training_info' pk=training_day.id %}" method="post">
             {% csrf_token %}
             {{ create_training_info_form }}
@@ -36,7 +38,7 @@
         <!-- Создание TrainingInfo (по сути, просто добавление упражнения к тренировочному дню) -->
 
 
-        {% if request.user.profile.is_coach or request.user.is_superuser %}
+        {% if request.user.is_authenticated %}
 
         <a href="{% url 'training:update_training_day' pk=training_day.id %}">Edit Day Name</a>
         <a href="{% url 'training:delete_training_day' pk=training_day.id %}">Delete Day Name</a>

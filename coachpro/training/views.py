@@ -69,6 +69,7 @@ class DeleteTrainingDayView(DeleteView):
         return self.object.training_page.get_absolute_url()
 
 
+# Training info
 class CreateTrainingInfoView(CreateView):
     model = TrainingInfo
     form_class = CreateTrainingInfoForm
@@ -79,6 +80,14 @@ class CreateTrainingInfoView(CreateView):
         form.instance.training_day = training_day
         self.object = form.save()
         return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        return self.object.training_day.training_page.get_absolute_url()
+
+
+class DeleteTrainingInfoView(DeleteView):
+    model = TrainingInfo
+    template_name_suffix = "_confirm_delete"
 
     def get_success_url(self) -> str:
         return self.object.training_day.training_page.get_absolute_url()
