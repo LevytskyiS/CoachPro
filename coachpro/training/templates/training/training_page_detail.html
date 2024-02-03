@@ -3,16 +3,21 @@
 
 {% block content %}
     {{ training_page }}
+    <!-- Выводим все тренировочные дни, которые есть у клиента -->
     {% for training_day in training_page.training_day.all %}
         <hr>
         {{ training_day.day }}<br/>
         EXERCISES<br/><br/>
         {% for training_info in training_day.workout_info.all %}
+            <!-- Для каждого тренировочного дня выводим TrainingInfo object с указанием упражнения и всех TrainingStats -->
             {{ training_info.training.exercise }}<br/>
-            Weight: {{ training_info.stats.weight }}<br/>
-            Reps: {{ training_info.stats.reps }}<br/>
-            Sets: {{ training_info.stats.sets }}<br/><br/>
-            <a href="{% url 'training:update_training_stats' pk=training_info.stats.id %}">Update W, R, S</a><br/><br/>
+
+            {% for training_stats in training_info.training_stats.all %}
+                Weight: {{ training_stats.weight }}<br/>
+                Reps: {{ training_stats.reps }}<br/>
+                Sets: {{ training_stats.sets }}<br/><br/>
+                <a href="{% url 'training:update_training_stats' pk=training_stats.id %}">Update W, R, S</a><br/><br/>
+            {% endfor %}
         {% endfor %}<br/>
 
         {% if request.user.profile.is_coach or request.user.is_superuser %}

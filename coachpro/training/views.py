@@ -11,7 +11,7 @@ from django.http import HttpRequest
 from django.contrib.auth.models import User
 
 from .models import TrainingPage, TrainingDay, Training, TrainingStats, TrainingInfo
-from .forms import CreateTrainingDayForm, UpdateTrainingStats
+from .forms import CreateTrainingDayForm, UpdateTrainingStats, CreateTrainingStatsForm
 
 
 # Training page
@@ -63,6 +63,21 @@ class DeleteTrainingDayView(DeleteView):
 
 
 # Training stats
+class CreateTrainingStatsView(CreateView):
+    model = TrainingStats
+    form_class = CreateTrainingDayForm
+    request = HttpRequest()
+
+    def form_valid(self, form):
+        training_page = TrainingPage.objects.get(id=self.kwargs.get("pk"))
+        form.instance.training_page = training_page
+        self.object = form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        return self.object.training_page.get_absolute_url()
+
+
 class UpdateTrainingStatsView(UpdateView):
     model = TrainingStats
     context_object_name = "training_stats"
@@ -70,6 +85,6 @@ class UpdateTrainingStatsView(UpdateView):
     template_name_suffix = "_update_form"
 
     def get_success_url(self) -> str:
-        training_info = TrainingInfo.objects.get(stats=self.kwargs.get("pk"))
+        training_info = TrainingInfo.objects.get(training_stats=self.kwargs.get("pk"))
         training_day = TrainingDay.objects.get(workout_info=training_info)
         return training_day.training_page.get_absolute_url()

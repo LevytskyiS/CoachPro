@@ -13,3 +13,9 @@ class UpdateTrainingStats(ModelForm):
     class Meta:
         model = TrainingStats
         exclude = []
+
+
+class CreateTrainingStatsForm(ModelForm):
+    class Meta:
+        model = TrainingStats
+        exclude = []
