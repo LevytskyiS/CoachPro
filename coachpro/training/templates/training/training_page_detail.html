@@ -41,7 +41,7 @@
         {% if request.user.is_authenticated %}
 
         <a href="{% url 'training:update_training_day' pk=training_day.id %}">Edit Day Name</a>
-        <a href="{% url 'training:delete_training_day' pk=training_day.id %}">Delete Day Name</a>
+        <a href="{% url 'training:delete_training_day' pk=training_day.id %}">Delete Day</a>
         <hr>
         
         {% endif %}
