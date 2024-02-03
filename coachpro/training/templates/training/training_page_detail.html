@@ -13,11 +13,9 @@
             {{ training_info.training.exercise }}<br/>
 
             {% for training_stats in training_info.training_stats.all %}
-                Weight: {{ training_stats.weight }}<br/>
-                Reps: {{ training_stats.reps }}<br/>
-                Sets: {{ training_stats.sets }}<br/><br/>
+                Weight: {{ training_stats.weight }}; Reps: {{ training_stats.reps }}; Sets: {{ training_stats.sets }}<br/><br/>
                 <a href="{% url 'training:update_training_stats' pk=training_stats.id %}">Update W, R, S</a><br/>
-                <a href="{% url 'training:delete_training_stats' pk=training_stats.id %}">Delete</a><br/><br/>
+                <a href="{% url 'training:delete_training_stats' pk=training_stats.id %}">Delete W, R, S</a><br/><br/>
             {% endfor %}
             Add W, R, S<br/>
             <form action="{% url 'training:create_training_stats' pk=training_info.id %}" method="post">
