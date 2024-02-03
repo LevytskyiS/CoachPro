@@ -49,3 +49,6 @@ class TrainingStats(models.Model):
     weight = models.DecimalField(max_digits=4, decimal_places=1)
     reps = models.PositiveSmallIntegerField()
     sets = models.PositiveSmallIntegerField()
+
+    def get_absolute_url(self):
+        return reverse("training:training_page_detail", kwargs={"pk": self.pk})

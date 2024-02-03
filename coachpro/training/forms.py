@@ -12,10 +12,10 @@ class CreateTrainingDayForm(ModelForm):
 class UpdateTrainingStats(ModelForm):
     class Meta:
         model = TrainingStats
-        exclude = []
+        exclude = ["training_info"]
 
 
 class CreateTrainingStatsForm(ModelForm):
     class Meta:
         model = TrainingStats
-        exclude = []
+        exclude = ["training_info"]
