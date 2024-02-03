@@ -1,6 +1,7 @@
 from typing import Any
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout, login
 from django.contrib.auth.models import User
 from django.views.generic import (
     ListView,
@@ -17,13 +18,37 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
 )
 
-from .forms import LoginUserForm, UpdateUserProfileForm
+from .forms import LoginUserForm, UpdateUserProfileForm, RegisterUserForm
 from .models import Profile
 from progress.forms import CreateReporttForm, UploadFileForm, UploadPhotoForm
+from training.models import TrainingPage
 
 
 def index(request):
     return render(request, "users/index.html")
+
+
+def registration_confirmation(request):
+    return render(request, "users/registration_confirmation.html")
+
+
+# Registration
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = "users/registration.html"
+    # success_url = reverse_lazy("main:index")
+
+    def form_valid(self, form):
+        user = form.save()
+        user.is_active = False
+        user.save()
+        profile = Profile(user=user, is_client=True)
+        profile.save()
+        training_page = TrainingPage(user=user)
+        training_page.save()
+        # login(self.request, user)
+        # return redirect("users:profile_update", user.profile.id)
+        return redirect("users:registration_confirmation")
 
 
 # Log in

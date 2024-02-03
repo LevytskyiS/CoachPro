@@ -31,8 +31,6 @@
 
             <a href="{% url 'users:profile_update' pk=user.profile.id %}">Edit Profile</a><br/><br/>
 
-            EDIT PROFILE LINK<br/><br/>
-
             REPORTS:<br/><br/>
             {% for report in user.reports.all %}
                 Weight: {{ report.weight }}<br/>
