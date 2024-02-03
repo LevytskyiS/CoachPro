@@ -9,6 +9,7 @@ urlpatterns = [
         views.TrainingPageDetailView.as_view(),
         name="training_page_detail",
     ),
+    # Training days
     path(
         "create/<int:pk>/",
         views.CreateTrainingDayView.as_view(),
@@ -24,6 +25,7 @@ urlpatterns = [
         views.DeleteTrainingDayView.as_view(),
         name="delete_training_day",
     ),
+    # Training info
     path(
         "create_info/<int:pk>/",
         views.CreateTrainingInfoView.as_view(),
@@ -34,6 +36,7 @@ urlpatterns = [
         views.DeleteTrainingInfoView.as_view(),
         name="delete_training_info",
     ),
+    # Training stats
     path(
         "create_stats/<int:pk>/",
         views.CreateTrainingStatsView.as_view(),
