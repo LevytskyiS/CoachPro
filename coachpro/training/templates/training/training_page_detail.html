@@ -26,14 +26,15 @@
             <br/><br/>
             <a href="{% url 'training:delete_training_info' pk=training_info.id %}">Удалить упражнение</a>
         {% endfor %}<br/>
+        
         Добавление упражнения <br/>
+        <!-- Создание TrainingInfo (по сути, просто добавление упражнения к тренировочному дню) -->
         <form action="{% url 'training:create_training_info' pk=training_day.id %}" method="post">
             {% csrf_token %}
             {{ create_training_info_form }}
             <input type="submit" value="Submit">
         </form>
             <br/><br/>
-        <!-- Создание TrainingInfo (по сути, просто добавление упражнения к тренировочному дню) -->
 
 
         {% if request.user.is_authenticated %}
