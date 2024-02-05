@@ -36,6 +36,9 @@
             <li>
                 <a href="{{ request.user.notepage.get_absolute_url }}">My Notes (Client)</a>
             </li>
+            <li>
+                <a href="{{ request.user.mealplan_page.get_absolute_url }}">My Meal Plan (Client)</a>
+            </li>
             {% endif %}
             {% if request.user.is_authenticated %}
             <li>

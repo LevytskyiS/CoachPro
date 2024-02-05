@@ -23,6 +23,7 @@ from .models import Profile
 from progress.forms import CreateReporttForm, UploadFileForm, UploadPhotoForm
 from training.models import TrainingPage
 from notes.models import NotePage
+from mealplan.models import MealPlanPage
 
 
 def index(request):
@@ -49,6 +50,8 @@ class RegisterUser(CreateView):
         training_page.save()
         note_page = NotePage(user=user)
         note_page.save()
+        mealplan_page = MealPlanPage(user=user)
+        mealplan_page.save()
         # login(self.request, user)
         # return redirect("users:profile_update", user.profile.id)
         return redirect("users:registration_confirmation")

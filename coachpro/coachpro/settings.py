@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "progress",
     "training",
     "notes",
+    "mealplan",
 ]
 
 MIDDLEWARE = [
