@@ -1,0 +1,29 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if not notepage.get_all_notes %}
+    <div>No notes</div>
+    {% else %}
+    <h3>My Notes:</h3>
+        {% for note in notepage.get_all_notes %}
+        <p><b>{{ note.user.first_name }}</b></p>
+        <p>{{ note.text }}</p>
+            {% if request.user.id == note.user.id %}
+                <div>
+                    <a href="{% url 'notes:update_note' pk=note.id %}">Edit</a>
+                </div>
+                <div>
+                    <a href="{% url 'notes:delete_note' pk=note.id %}">Delete</a>
+                </div>
+            {% endif %}        
+        {% endfor %}
+    {% endif %}
+
+    <form action="{% url 'notes:create_note' pk=notepage.id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+
+{% endblock %}

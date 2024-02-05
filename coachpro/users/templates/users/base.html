@@ -33,6 +33,9 @@
             <li>
                 <a href="{{ request.user.training_pages.get_absolute_url }}">My Trainings (Client)</a>
             </li>
+            <li>
+                <a href="{{ request.user.notepage.get_absolute_url }}">My Notes (Client)</a>
+            </li>
             {% endif %}
             {% if request.user.is_authenticated %}
             <li>

@@ -1,0 +1,12 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <form method="post" action="{% url 'notes:update_note' pk=note.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Update">
+        </form>
+    {% endif %}
+{% endblock %}

@@ -22,6 +22,7 @@ from .forms import LoginUserForm, UpdateUserProfileForm, RegisterUserForm
 from .models import Profile
 from progress.forms import CreateReporttForm, UploadFileForm, UploadPhotoForm
 from training.models import TrainingPage
+from notes.models import NotePage
 
 
 def index(request):
@@ -46,6 +47,8 @@ class RegisterUser(CreateView):
         profile.save()
         training_page = TrainingPage(user=user)
         training_page.save()
+        note_page = NotePage(user=user)
+        note_page.save()
         # login(self.request, user)
         # return redirect("users:profile_update", user.profile.id)
         return redirect("users:registration_confirmation")
