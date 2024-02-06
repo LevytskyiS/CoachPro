@@ -45,5 +45,4 @@ class Profile(models.Model):
         return self.coach.all()[0]
 
     def get_clients(self):
-        print(self.clients.all())
         return self.clients.all()

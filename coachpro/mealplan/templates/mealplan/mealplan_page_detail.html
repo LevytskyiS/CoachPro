@@ -8,10 +8,13 @@
         <hr>
         {{ meal.name }}<br/>
 
-        {% for food in meal.meal_info.all %}
-            {{ food.food.name }}<br/>
-            <a href="{% url 'mealplan:update_meal_info' pk=food.id %}">Update Food</a><br/>
-            <a href="{% url 'mealplan:delete_meal_info' pk=food.id %}">Delete Food</a><br/><br/>
+        Proteins: {{ meal.get_proteins }}; Fats: {{ meal.get_fats }}; Carbs: {{ meal.get_carbohydrates }}; Calories: {{ meal.get_calories }};<br/><br/>
+
+        {% for meal_info in meal.meal_info.all %}
+            <span>{{ meal_info.food.name }} - Proteins: {{ meal_info.food.proteins }}, Fats:  {{ meal_info.food.fats }}, Carbs:  {{ meal_info.food.carbohydrates }}, Calories:  {{ meal_info.food.calories }}</span>
+            <br/>
+            <a href="{% url 'mealplan:update_meal_info' pk=meal_info.id %}">Update Food</a><br/>
+            <a href="{% url 'mealplan:delete_meal_info' pk=meal_info.id %}">Delete Food</a><br/><br/>
         {% endfor %}
         Добавление продукта <br/>
         <!-- Создание MealInfo (по сути, просто добавление продукта к приему пищи) -->
