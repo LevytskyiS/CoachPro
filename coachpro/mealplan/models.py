@@ -67,8 +67,5 @@ class MealInfo(models.Model):
     meal = models.ForeignKey(Meal, related_name="meal_info", on_delete=models.CASCADE)
     food = models.ForeignKey(Food, related_name="food_info", on_delete=models.CASCADE)
 
-    def get_proteins(self):
-        return "LLLLOOOOOOOOOOOOOLLLLLLLLLL"
-
     def get_absolute_url(self):
         return reverse("mealplan:mealplan_page_detail", kwargs={"pk": self.pk})
