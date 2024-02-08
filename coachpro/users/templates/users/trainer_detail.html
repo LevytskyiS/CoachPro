@@ -3,10 +3,19 @@
 
 {% block content %}
 
+{% if request.user.is_authenticated %}
+
     <p>Trainer's profile</p>
-    {{ trainer }}
-    {% for client in trainer.profile.get_clients %}
-        <a href="{{ client.profile.get_absolute_url_client }}">{{ client }}</a>
-    {% endfor %}
+        {{ trainer.first_name }} {{ trainer.last_name }}<br/><br/>
+
+    {% if request.user.is_superuser or request.user.id == trainer.id  %}
+        CLIENTS:<br/><br/>
+        {% for client in trainer.profile.get_clients %}
+            <a href="{{ client.profile.get_absolute_url_client }}">{{ client.first_name }} {{ client.last_name }}</a><br/>
+        {% endfor %}
+    
+    {% endif %}
+
+{% endif %}
     
 {% endblock %}

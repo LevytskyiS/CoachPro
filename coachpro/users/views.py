@@ -106,6 +106,7 @@ class UpdateUserProfileView(UpdateView):
         "chronic_illness",
         "spine",
         "schedule",
+        "steps",
         "muscles",
         "unfavourite_food",
         "food_allergies",

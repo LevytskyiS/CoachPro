@@ -15,6 +15,9 @@ class Profile(models.Model):
     clients = models.ManyToManyField(
         User, related_name="clients", blank=True, null=True
     )
+    avatar = models.ImageField(
+        upload_to="profile", default="/profile/user_pic_default.svg"
+    )
     age = models.IntegerField(blank=True, null=True)
     weight = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     height = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
@@ -46,3 +49,6 @@ class Profile(models.Model):
 
     def get_clients(self):
         return self.clients.all()
+
+    def get_clients_ids(self):
+        return [client.id for client in self.get_clients()]

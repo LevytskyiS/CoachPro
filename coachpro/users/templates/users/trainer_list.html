@@ -3,8 +3,12 @@
 
 {% block content %}
 
+{% if request.user.is_authenticated and request.user.is_superuser %}
+
     {% for trainer in trainers %}
-        <a href="{{ trainer.profile.get_absolute_url_trainer }}">{{ trainer.profile }}</a>
+        <a href="{{ trainer.profile.get_absolute_url_trainer }}">{{ trainer.first_name }} {{ trainer.last_name }}</a>
     {% endfor %}
+
+{% endif %}
 
 {% endblock %}

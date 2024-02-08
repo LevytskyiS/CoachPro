@@ -4,6 +4,8 @@
 {% block content %}
     {% if request.user.is_authenticated %}
 
+        {% if request.user.is_superuser or request.user.id == user.id or request.user.id == user.profile.get_trainer.id  %}
+
             Client's profile<br/>
             {{ user.first_name }} {{ user.last_name }}<br/><br/>
             Trainer:<br/>
@@ -15,6 +17,7 @@
             {% endif %}
 
             BASIC DATA:<br/><br/>
+            <img src="{{ user.profile.avatar.url }}" alt="" width="100" height="50"><br/><br/>
             Age: {{ user.profile.age }}<br/>
             Weight: {{ user.profile.weight }}<br/>
             Height: {{ user.profile.height }}<br/>
@@ -90,6 +93,8 @@
                 </form>
                 <br/><br/>
             {% endif %}
+        
+        {% endif %}
 
     {% endif %}
 {% endblock %}
