@@ -2,39 +2,45 @@
 {% load static %}
 
 {% block content %}
-    {{ mealplan_page }}
-    <!-- Выводим все тренировочные дни, которые есть у клиента -->
-    {% for meal in mealplan_page.meal.all %}
-        <hr>
-        {{ meal.name }}<br/>
 
-        Proteins: {{ meal.get_proteins }}; Fats: {{ meal.get_fats }}; Carbs: {{ meal.get_carbohydrates }}; Calories: {{ meal.get_calories }};<br/><br/>
+{% if request.user.is_authenticated %}
+    {% if request.user.is_superuser or request.user.id == mealplan_page.user.id or request.user.id == mealplan_page.user.get_trainer.id %}
 
-        {% for meal_info in meal.meal_info.all %}
-            <span>{{ meal_info.food.name }} - Proteins: {{ meal_info.food.proteins }}, Fats:  {{ meal_info.food.fats }}, Carbs:  {{ meal_info.food.carbohydrates }}, Calories:  {{ meal_info.food.calories }}</span>
-            <br/>
-            <a href="{% url 'mealplan:update_meal_info' pk=meal_info.id %}">Update Food</a><br/>
-            <a href="{% url 'mealplan:delete_meal_info' pk=meal_info.id %}">Delete Food</a><br/><br/>
+        <!-- Выводим все дни с питанием, которые есть у клиента -->
+        {% for meal in mealplan_page.meal.all %}
+            <hr>
+            {{ meal.name }}<br/>
+
+            Proteins: {{ meal.get_proteins }}; Fats: {{ meal.get_fats }}; Carbs: {{ meal.get_carbohydrates }}; Calories: {{ meal.get_calories }};<br/><br/>
+
+            {% for meal_info in meal.meal_info.all %}
+                <span>{{ meal_info.food.name }} - Proteins: {{ meal_info.food.proteins }}, Fats:  {{ meal_info.food.fats }}, Carbs:  {{ meal_info.food.carbohydrates }}, Calories:  {{ meal_info.food.calories }}</span>
+                <br/>
+                <a href="{% url 'mealplan:update_meal_info' pk=meal_info.id %}">Update Food</a><br/>
+                <a href="{% url 'mealplan:delete_meal_info' pk=meal_info.id %}">Delete Food</a><br/><br/>
+            {% endfor %}
+            Добавление продукта <br/>
+            <!-- Создание MealInfo (по сути, просто добавление продукта к приему пищи) -->
+            <form action="{% url 'mealplan:create_meal_info' pk=meal.id %}" method="post">
+                {% csrf_token %}
+                {{ create_meal_info_form }}
+                <input type="submit" value="Submit">
+            </form>
+                <br/><br/>
+            {% if request.user.is_authenticated %}
+
+            <a href="{% url 'mealplan:update_meal' pk=meal.id %}">Edit Day Name</a>
+            <a href="{% url 'mealplan:delete_meal' pk=meal.id %}">Delete Day</a>
+            <hr>
+            
+            {% endif %}
         {% endfor %}
-        Добавление продукта <br/>
-        <!-- Создание MealInfo (по сути, просто добавление продукта к приему пищи) -->
-        <form action="{% url 'mealplan:create_meal_info' pk=meal.id %}" method="post">
+        <form action="{% url 'mealplan:create_meal' pk=mealplan_page.id %}" method="post">
             {% csrf_token %}
-            {{ create_meal_info_form }}
+            {{ create_meal_form }}
             <input type="submit" value="Submit">
         </form>
-            <br/><br/>
-        {% if request.user.is_authenticated %}
 
-        <a href="{% url 'mealplan:update_meal' pk=meal.id %}">Edit Day Name</a>
-        <a href="{% url 'mealplan:delete_meal' pk=meal.id %}">Delete Day</a>
-        <hr>
-        
-        {% endif %}
-    {% endfor %}
-    <form action="{% url 'mealplan:create_meal' pk=mealplan_page.id %}" method="post">
-        {% csrf_token %}
-        {{ create_meal_form }}
-        <input type="submit" value="Submit">
-    </form>
+    {% endif %}
+{% endif %}
 {% endblock %}

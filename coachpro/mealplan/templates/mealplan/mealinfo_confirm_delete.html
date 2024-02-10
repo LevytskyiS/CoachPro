@@ -2,10 +2,16 @@
 {% load static %}
 
 {% block content %}
+{% if request.user.is_authenticated %}
+    {% if request.user.is_superuser or request.user.id == mealinfo.meal.mealplan_page.user.id or request.user.id == meal.mealplan_page.user.get_trainer.id %}
+
     <form method="post" action="{% url 'mealplan:delete_meal_info' pk=mealinfo.id %}">
         {% csrf_token %}
         <p>Are you sure you want to delete this record?</p>
         {{ form }}
         <input type="submit" value="Confirm">
     </form>
+
+    {% endif %}
+{% endif %}
 {% endblock %}

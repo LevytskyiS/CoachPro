@@ -2,9 +2,15 @@
 {% load static %}
 
 {% block content %}
+{% if request.user.is_authenticated %}
+    {% if request.user.is_superuser or request.user.id == meal.mealplan_page.user.id or request.user.id == meal.mealplan_page.user.get_trainer.id %}
+
         <form method="post" action="{% url 'mealplan:update_meal' pk=meal.id %}">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Update">
         </form>
+
+    {% endif %}
+{% endif %}
 {% endblock %}
