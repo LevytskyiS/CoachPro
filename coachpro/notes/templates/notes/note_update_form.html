@@ -2,11 +2,14 @@
 {% load static %}
 
 {% block content %}
-    {% if request.user.is_authenticated %}
+{% if request.user.is_authenticated %}
+    {% if request.user.is_superuser or request.user.id == note.note_page.user.id or request.user.id == note.note_page.user.get_trainer.id %}
+
         <form method="post" action="{% url 'notes:update_note' pk=note.id %}">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Update">
         </form>
     {% endif %}
+{% endif %}
 {% endblock %}
