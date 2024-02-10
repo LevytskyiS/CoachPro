@@ -1,6 +1,7 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.contrib.auth import logout, login
 from django.contrib.auth.models import User
 from django.views.generic import (
@@ -17,6 +18,7 @@ from django.contrib.auth.views import (
     LogoutView,
     PasswordResetConfirmView,
 )
+from django.contrib.messages.views import SuccessMessageMixin
 
 from .forms import LoginUserForm, UpdateUserProfileForm, RegisterUserForm
 from .models import Profile
@@ -78,6 +80,18 @@ class LoginUser(LoginView):
 class LogOutUser(LogoutView):
     # Logging out via GET requests to the built-in logout view is deprecated. Use POST requests instead.
     next_page = "/"
+
+
+# Password Reset
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = "users/password_reset.html"
+    email_template_name = "users/password_reset_email.html"
+    html_email_template_name = "users/password_reset_email.html"
+    success_url = reverse_lazy("users:password_reset_done")
+    success_message = (
+        "An email with instructions to reset your password has been sent to %(email)s."
+    )
+    subject_template_name = "users/password_reset_subject.txt"
 
 
 # Clients section
