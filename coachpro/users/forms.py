@@ -5,8 +5,7 @@ from django.forms import (
     EmailInput,
     TextInput,
     PasswordInput,
-    FileInput,
-    ImageField,
+    ModelChoiceField,
 )
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -24,6 +23,10 @@ class RegisterUserForm(UserCreationForm):
         label="Password confirmation",
         widget=PasswordInput(),
     )
+    coach = ModelChoiceField(
+        queryset=User.objects.filter(is_active=True).filter(profile__is_coach=True),
+        required=True,
+    )
 
     class Meta:
         model = User
@@ -34,6 +37,7 @@ class RegisterUserForm(UserCreationForm):
             "email",
             "password1",
             "password2",
+            "coach",
         )
 
 

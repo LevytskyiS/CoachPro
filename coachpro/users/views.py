@@ -44,14 +44,25 @@ class RegisterUser(CreateView):
         user = form.save()
         user.is_active = False
         user.save()
+
         profile = Profile(user=user, is_client=True)
         profile.save()
+
         training_page = TrainingPage(user=user)
         training_page.save()
+
         note_page = NotePage(user=user)
         note_page.save()
+
         mealplan_page = MealPlanPage(user=user)
         mealplan_page.save()
+        # Достааем тренера из формы, сохраняем его новому клиенту, а затем клиента сохраняем тренеру
+        coach = User.objects.get(id=form.cleaned_data["coach"].id)
+        user.profile.coach.add(coach)
+        user.save()
+        coach.profile.clients.add(user)
+        coach.save()
+
         # login(self.request, user)
         # return redirect("users:profile_update", user.profile.id)
         return redirect("users:registration_confirmation")
