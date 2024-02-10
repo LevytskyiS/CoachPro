@@ -15,7 +15,7 @@
             </li>
             {% if request.user.is_authenticated and request.user.is_superuser %}
             <li>
-                <a href="{% url 'users:client_list' %}">All clients</a>
+                <a href="{% url 'users:client_list' %}">All clients (Active)</a>
             </li>
             <li>
                 <a href="{% url 'users:trainer_list' %}">All trainers</a>

@@ -2,6 +2,10 @@
 {% load static %}
 
 {% block content %}
+{% if request.user.is_authenticated %}
+    {% if request.user.is_superuser or request.user.id == training_page.user.id or request.user.id == training_page.user.profile.get_trainer.id  %}
+
+
     {{ training_page }}
     <!-- Выводим все тренировочные дни, которые есть у клиента -->
     {% for training_day in training_page.training_day.all %}
@@ -50,4 +54,6 @@
         {{ form_training_day }}
         <input type="submit" value="Submit">
     </form>
+    {% endif %}
+{% endif %}
 {% endblock %}

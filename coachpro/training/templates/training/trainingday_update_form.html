@@ -2,9 +2,15 @@
 {% load static %}
 
 {% block content %}
+{% if request.user.is_authenticated %}
+    {% if request.user.is_superuser or request.user.id == training_day.training_page.user.id or request.user.id == training_day.training_page.user.profile.get_trainer.id  %}
+
         <form method="post" action="{% url 'training:update_training_day' pk=training_day.id %}">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Update">
         </form>
+        
+    {% endif %}
+{% endif %}
 {% endblock %}

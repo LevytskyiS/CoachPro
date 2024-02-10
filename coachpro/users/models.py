@@ -11,10 +11,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, related_name="profile", on_delete=models.CASCADE)
     is_client = models.BooleanField(default=False)
     is_coach = models.BooleanField(default=False)
-    coach = models.ManyToManyField(User, related_name="coach", blank=True, null=True)
-    clients = models.ManyToManyField(
-        User, related_name="clients", blank=True, null=True
-    )
+    coach = models.ManyToManyField(User, related_name="coach", blank=True)
+    clients = models.ManyToManyField(User, related_name="clients", blank=True)
     avatar = models.ImageField(
         upload_to="profile", default="/profile/user_pic_default.svg"
     )

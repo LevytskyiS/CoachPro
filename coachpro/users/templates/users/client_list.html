@@ -4,7 +4,7 @@
 {% block content %}
 
     {% for user in users %}
-        <a href="{{ user.profile.get_absolute_url_client }}">{{ user.profile }}</a>
+        <a href="{{ user.profile.get_absolute_url_client }}">{{ user.first_name }} {{ user.last_name }}</a><br/>
     {% endfor %}
 
 {% endblock %}

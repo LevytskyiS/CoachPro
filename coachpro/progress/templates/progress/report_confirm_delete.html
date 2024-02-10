@@ -2,10 +2,17 @@
 {% load static %}
 
 {% block content %}
-<form method="post" action="{{ weight.get_absolute_url }}">
-    {% csrf_token %}
-    <p>Are you sure you want to delete this record?</p>
-    {{ form }}
-    <input type="submit" value="Confirm">
-</form>
+
+{% if request.user.is_authenticated %}
+    {% if request.user.is_superuser or request.user.id == report.user.id or request.user.id == report.user.get_trainer.id %}
+
+    <form method="post" action="{% url 'progress:delete_report' pk=report.id %}">
+        {% csrf_token %}
+        <p>Are you sure you want to delete this record?</p>
+        {{ form }}
+        <input type="submit" value="Confirm">
+    </form>
+
+    {% endif %}
+{% endif %}
 {% endblock %}

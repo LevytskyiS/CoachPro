@@ -2,10 +2,17 @@
 {% load static %}
 
 {% block content %}
-    <form method="post" action="{{ weight.get_absolute_url }}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Update">
-    </form>
-    <a href="{{ request.user.profile.get_absolute_url }}">Back</a>
+
+{% if request.user.is_authenticated %}
+    {% if request.user.is_superuser or request.user.id == report.user.id or request.user.id == report.user.get_trainer.id %}
+
+        <form method="post" action="{% url 'progress:update_report' pk=report.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Update">
+        </form>
+        <a href="{{ request.user.profile.get_absolute_url }}">Back</a>
+    
+    {% endif %}
+{% endif %}
 {% endblock %}
