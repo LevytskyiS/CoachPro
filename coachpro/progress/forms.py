@@ -28,17 +28,10 @@ class UploadFileForm(ModelForm):
     class Meta:
         model = File
         exclude = ["user"]
-        # widgets = {
-        #     "file": FileInput(
-        #         attrs={"class": "form-control", "placeholder": "Upload File"}
-        #     ),
-        # }
 
 
 class UploadPhotoForm(ModelForm):
     class Meta:
         model = Photo
         exclude = ["user"]
-        # widgets = {"image": ImageField()}
-        # fields = "all"
         image = ImageField()

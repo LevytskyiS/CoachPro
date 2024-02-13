@@ -4,6 +4,7 @@ from django.urls import reverse
 
 
 class Profile(models.Model):
+    # blank and null params will be removed later
     LIFESTYLE_CHOICES = {
         "Active": "Active",
         "Passive": "Passive",

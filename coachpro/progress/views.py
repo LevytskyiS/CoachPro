@@ -25,7 +25,6 @@ class CreateReportView(CreateView):
     request = HttpRequest()
 
     def form_valid(self, form):
-        # form.instance.post_id = self.kwargs.get("pk")
         user = User.objects.get(id=self.request.user.id)
         form.instance.user = user
         self.object = form.save()

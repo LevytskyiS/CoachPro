@@ -40,7 +40,6 @@ def registration_confirmation(request):
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
     template_name = "users/registration.html"
-    # success_url = reverse_lazy("main:index")
 
     def form_valid(self, form):
         user = form.save()
@@ -58,7 +57,7 @@ class RegisterUser(CreateView):
 
         mealplan_page = MealPlanPage(user=user)
         mealplan_page.save()
-        # Достааем тренера из формы, сохраняем его новому клиенту, а затем клиента сохраняем тренеру
+
         coach = User.objects.get(id=form.cleaned_data["coach"].id)
         user.profile.coach.add(coach)
         user.save()

@@ -27,7 +27,7 @@ class MealPlanPageDetailView(DetailView):
         return context
 
 
-# Training day
+# Meal section
 class CreateMealView(CreateView):
     model = Meal
     form_class = CreateMealForm
